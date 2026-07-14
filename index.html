@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>واتساب - نسخة المطور عبد الله</title>
+    <title>واتساب المطور عبد الله - النسخة الاحترافية الكاملة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        /* ==================== التنسيقات الأساسية وتصفير الأبعاد ==================== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -23,7 +25,7 @@
             transition: background 0.3s;
         }
 
-        /* حاويات الصفحات */
+        /* حاوية الصفحات الرئيسية لتناسب شاشات الهواتف والـ APK */
         .page {
             width: 100%;
             max-width: 450px;
@@ -39,7 +41,7 @@
             background-position: center;
         }
 
-        /* ==================== صفحة التسجيل ==================== */
+        /* ==================== شاشة تسجيل الدخول وإنشاء الحساب ==================== */
         .register-container {
             padding: 30px 24px;
             text-align: center;
@@ -61,6 +63,7 @@
             margin-bottom: 25px;
         }
 
+        /* رفع وتعديل الصورة الشخصية */
         .avatar-upload {
             position: relative;
             width: 110px;
@@ -146,7 +149,7 @@
             background-color: #005e4d;
         }
 
-        /* ==================== صفحة قائمة الشاتات ==================== */
+        /* ==================== شاشة قائمة الدردشات الرئيسية ==================== */
         .chats-header {
             background-color: #008069;
             color: white;
@@ -176,6 +179,7 @@
             transition: transform 0.2s;
         }
 
+        /* تأثير التاج الدوار الخاص بالمطور */
         .admin-header-active {
             border: 2px solid transparent;
             background-image: linear-gradient(#008069, #008069), radial-gradient(circle, #f7b10a, #ff007f, #00f0ff);
@@ -212,11 +216,7 @@
             color: #d1f4ec;
         }
 
-        .header-icon-btn:active {
-            transform: scale(0.85);
-        }
-
-        /* القائمة المنسدلة */
+        /* القائمة المنسدلة للخيارات */
         .dropdown-menu {
             position: absolute;
             top: 55px;
@@ -252,7 +252,7 @@
             background-color: #f0f2f5;
         }
 
-        /* شريط البحث */
+        /* شريط البحث المطور */
         .search-container {
             padding: 8px 16px;
             background-color: #fff;
@@ -277,7 +277,7 @@
             background-color: rgba(255, 255, 255, 0.9);
         }
 
-        /* كروت جهات الاتصال والمحادثات */
+        /* كارت جهة الاتصال والدردشة الفرعي */
         .chat-card {
             display: flex;
             align-items: center;
@@ -347,13 +347,12 @@
             padding: 40px 20px;
         }
 
-        /* شارة التوثيق الحقيقية */
         .verified-badge {
             color: #1d9bf0;
             font-size: 14px;
         }
 
-        /* ==================== واجهة الشات الحقيقية ==================== */
+        /* ==================== شاشة المحادثة النشطة (Chat Screen) ==================== */
         .chat-screen {
             position: absolute;
             top: 0;
@@ -423,6 +422,7 @@
             background-color: rgba(239, 234, 226, 0.4);
         }
 
+        /* رسائل الشات الحقيقية */
         .msg {
             max-width: 75%;
             padding: 8px 12px;
@@ -482,7 +482,7 @@
             font-size: 16px;
         }
 
-        /* ==================== النوافذ المنبثقة ==================== */
+        /* ==================== النوافذ المنبثقة (Modals) ==================== */
         .profile-modal {
             position: absolute;
             top: 0;
@@ -572,7 +572,6 @@
             margin-bottom: 15px;
         }
 
-        /* تعديل الاسم الشخصي */
         .edit-profile-fields {
             margin-bottom: 15px;
             text-align: right;
@@ -595,7 +594,7 @@
             font-size: 14px;
         }
 
-        /* قسم الصوت ونغمة البروفايل */
+        /* نظام الصوت المدمج */
         .audio-section {
             text-align: right;
             margin-top: 15px;
@@ -638,7 +637,7 @@
             text-align: center;
         }
 
-        /* ==================== لوحة تحكم الآدمن المطور ==================== */
+        /* ==================== لوحة تحكم الإدارة (الآدمن) ==================== */
         .admin-panel-card {
             text-align: right;
         }
@@ -705,7 +704,7 @@
             background-color: #ff9800;
         }
 
-        /* تأثير هدايا تيك توك */
+        /* تأثيرات تيك توك الترحيبية */
         .gift-container {
             position: absolute;
             top: 0;
@@ -747,7 +746,6 @@
             100% { transform: translateY(350px) scale(0.8) rotate(360deg); opacity: 0; }
         }
 
-        /* إضافة أنيميشن تكبير الإعلان لـ TikTok */
         @keyframes zoomAndSlide {
             0% { transform: translateX(-50%) scale(0); opacity: 0; }
             20% { transform: translateX(-50%) scale(1.1); opacity: 1; }
@@ -756,7 +754,7 @@
             100% { transform: translateX(-50%) scale(0); opacity: 0; }
         }
 
-        /* ==================== قائمة الإعدادات العامة ==================== */
+        /* ==================== واجهة الإعدادات الفنية والتصميمية ==================== */
         .settings-content-new {
             display: flex;
             flex-direction: column;
@@ -788,33 +786,12 @@
             font-size: 16px;
         }
 
-        /* ألوان الأزرار المخصصة */
-        .btn-add-account {
-            background-color: #f4fbf7;
-            color: #0f8b5a;
-        }
+        .btn-add-account { background-color: #f4fbf7; color: #0f8b5a; }
+        .btn-chat-bg { background-color: #eef7fc; color: #2b70b5; }
+        .btn-list-bg { background-color: #eef7fc; color: #2b70b5; }
+        .btn-banner-bg { background-color: #eef7fc; color: #2b70b5; }
+        .btn-logout-new { background-color: #fff3f3; color: #d32f2f; }
 
-        .btn-chat-bg {
-            background-color: #eef7fc;
-            color: #2b70b5;
-        }
-
-        .btn-list-bg {
-            background-color: #eef7fc;
-            color: #2b70b5;
-        }
-
-        .btn-banner-bg {
-            background-color: #eef7fc;
-            color: #2b70b5;
-        }
-
-        .btn-logout-new {
-            background-color: #fff3f3;
-            color: #d32f2f;
-        }
-
-        /* نافذة اختيار النقوش والخلفيات */
         .patterns-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -835,15 +812,15 @@
             border-color: #008069;
         }
 
-        /* خامات ونقوش الخلفيات */
+        /* نقوش فنية مجهزة مسبقاً للخلفيات */
         .pattern-1 { background: radial-gradient(circle, #34495e 10%, transparent 11%), radial-gradient(circle, #34495e 10%, transparent 11%); background-size: 20px 20px; background-position: 0 0, 10px 10px; background-color: #2c3e50; }
         .pattern-2 { background-image: linear-gradient(45deg, #e5e5e5 25%, transparent 25%), linear-gradient(-45deg, #e5e5e5 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e5e5e5 75%), linear-gradient(-45deg, transparent 75%, #e5e5e5 75%); background-size: 20px 20px; background-color: #f9f9f9; }
         .pattern-3 { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
         .pattern-4 { background: linear-gradient(135deg, #134e5e 0%, #71b280 100%); }
         .pattern-5 { background: repeating-linear-gradient(45deg, #e7f3f0, #e7f3f0 10px, #ffffff 10px, #ffffff 20px); }
-        .pattern-6 { background: #efeae2; } /* الكلاسيكي */
+        .pattern-6 { background: #efeae2; }
 
-        /* ==================== شاشة الحظر (البان) ==================== */
+        /* ==================== شاشة حظر المستخدمين (BAN SCREEN) ==================== */
         .ban-screen-overlay {
             position: absolute;
             top: 0;
@@ -898,7 +875,7 @@
             border-radius: 8px;
         }
 
-        /* ==================== صندوق الإشعار المفاجئ المستلم ==================== */
+        /* ==================== منبثق الإشعار المفاجئ ==================== */
         .alert-popup-overlay {
             position: absolute;
             top: 0;
@@ -1007,14 +984,13 @@
         <div class="chat-screen" id="chatScreen">
             <div class="chat-header" id="chatHeaderBar">
                 <div class="back-btn" onclick="closeChat()"><i class="fa-solid fa-arrow-right"></i></div>
-                <div class="chat-header-avatar-elem" id="chatHeaderAvatar" onclick="openTargetProfileFromChat()"></div>
+                <div class="chat-header-avatar-elem" id="targetChatHeaderAvatar" onclick="openTargetProfileFromChat()"></div>
                 <div class="chat-header-info">
-                    <div class="chat-header-name-elem" id="chatHeaderName" onclick="openTargetProfileFromChat()">الدردشة</div>
+                    <div class="chat-header-name-elem" id="targetChatHeaderName" onclick="openTargetProfileFromChat()">الدردشة</div>
                     <div class="chat-header-status">متصل حالياً</div>
                 </div>
             </div>
-            <div class="chat-messages" id="chatMessages">
-                </div>
+            <div class="chat-messages" id="chatMessages"></div>
             <div class="chat-input-area">
                 <input type="text" class="chat-input" id="chatInput" placeholder="اكتب رسالة هنا..." onkeypress="handleChatKeyPress(event)">
                 <button class="send-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
@@ -1154,7 +1130,6 @@
             <div class="profile-card">
                 <span class="close-modal" onclick="closePatternSelector()"><i class="fa-solid fa-xmark"></i></span>
                 <h3 style="color: #008069; margin-bottom: 15px;"><i class="fa-solid fa-palette"></i> اختر التصميم أو النقش الفني</h3>
-                <p style="font-size: 13px; color: #667781; margin-bottom: 15px;">اختر شكلاً أو نقشاً هندسياً ليتم تطبيقه فوراً:</p>
                 
                 <div class="patterns-grid">
                     <div class="pattern-option pattern-1" onclick="applyPattern(1)"></div>
@@ -1178,25 +1153,119 @@
     </div>
 
     <script>
+        // تعريف الثوابت الهامة والروابط الافتراضية
         const defaultAvatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
         const adminAvatarUrl = 'https://i.ibb.co/tTHSpcbx/FB-IMG-1781216316215.jpg';
-        let selectedImageBase64 = "";
-
-        // تهيئة قواعد البيانات المخزنة محلياً
-        let accounts = JSON.parse(localStorage.getItem('user_accounts')) || [];
-        let activeIndex = parseInt(localStorage.getItem('active_account_index')) || 0;
         
-        let chatHistories = JSON.parse(localStorage.getItem('chat_histories')) || {};
-        let bannedUsers = JSON.parse(localStorage.getItem('banned_users')) || [];
-        let pendingAlerts = JSON.parse(localStorage.getItem('pending_alerts')) || {};
-
+        let selectedImageBase64 = "";
         let currentChatTargetId = null;
-        let activeCustomizerType = ""; // 'chat' or 'list' or 'banner'
+        let activeCustomizerType = "";
 
+        // ==================== [1] إعداد وإطلاق قاعدة البيانات IndexedDB ====================
+        let db;
+        const request = indexedDB.open("WhatsAppCloneDB", 1);
+
+        // يتم تشغيل هذه الدالة في حال فتح قاعدة البيانات لأول مرة لتأسيس جداول التخزين
+        request.onupgradeneeded = function(e) {
+            db = e.target.result;
+            
+            // جدول لحفظ بيانات الحسابات المسجلة بالتطبيق
+            if (!db.objectStoreNames.contains('accounts')) {
+                db.createObjectStore('accounts', { keyPath: 'id' });
+            }
+            
+            // جدول لحفظ المحادثات والرسائل بداخلها
+            if (!db.objectStoreNames.contains('chats')) {
+                db.createObjectStore('chats', { keyPath: 'chatKey' });
+            }
+            
+            // جدول لحفظ حالة النظام العامة والحساب النشط وقائمة المحظورين
+            if (!db.objectStoreNames.contains('system')) {
+                db.createObjectStore('system', { keyPath: 'key' });
+            }
+        };
+
+        // يتم تشغيل هذه الدالة فور نجاح الاتصال بقاعدة البيانات لتهيئة التطبيق وعرض البيانات
+        request.onsuccess = function(e) {
+            db = e.target.result;
+            initApp();
+        };
+
+        request.onerror = function(e) {
+            console.error("خطأ أثناء محاولة فتح قاعدة البيانات المدمجة:", e);
+        };
+
+        // ==================== [2] دوال مساعدة للتعامل مع قاعدة البيانات الـ Promises ====================
+        function dbGet(storeName, key) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(storeName, 'readonly');
+                const store = transaction.objectStore(storeName);
+                const req = store.get(key);
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function dbPut(storeName, data) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(storeName, 'readwrite');
+                const store = transaction.objectStore(storeName);
+                const req = store.put(data);
+                req.onsuccess = () => resolve();
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function dbDelete(storeName, key) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(storeName, 'readwrite');
+                const store = transaction.objectStore(storeName);
+                const req = store.delete(key);
+                req.onsuccess = () => resolve();
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function dbGetAll(storeName) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(storeName, 'readonly');
+                const store = transaction.objectStore(storeName);
+                const req = store.getAll();
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        // ==================== [3] تهيئة وإطلاق شاشات التطبيق ====================
+        async function initApp() {
+            // جلب حالة النظام العامة أو إنشاء واحدة افتراضية في حال عدم وجودها
+            let systemState = await dbGet('system', 'state');
+            if (!systemState) {
+                systemState = { key: 'state', activeIndex: 0, bannedUsers: [], pendingAlerts: {} };
+                await dbPut('system', systemState);
+            }
+
+            const accountsList = await dbGetAll('accounts');
+
+            // إذا كانت هناك حسابات مسجلة مسبقاً، يتم الانتقال تلقائياً لشاشة الشات
+            if (accountsList.length > 0) {
+                applyActiveAccountUI(accountsList, systemState.activeIndex, systemState.bannedUsers);
+                document.getElementById('page1').style.display = 'none';
+                document.getElementById('page2').style.display = 'flex';
+                checkForIncomingAlerts(accountsList[systemState.activeIndex]?.id, systemState.pendingAlerts);
+            } else {
+                // في حال عدم وجود أي حساب، يتم عرض شاشة التسجيل
+                document.getElementById('page1').style.display = 'flex';
+                document.getElementById('page2').style.display = 'none';
+            }
+        }
+
+        // توليد معرّف ID فريد وعشوائي للمستخدم الجديد
         function generateUniqueID() {
             return '#' + Math.floor(1000 + Math.random() * 9000);
         }
 
+        // معاينة الصورة الشخصية المختارة قبل الحفظ
         function previewImage(event) {
             const file = event.target.files[0];
             if (file) {
@@ -1204,42 +1273,48 @@
                 reader.onload = function(e) {
                     document.getElementById('imagePreview').style.backgroundImage = `url('${e.target.result}')`;
                     selectedImageBase64 = e.target.result; 
-                }
+                };
                 reader.readAsDataURL(file);
             }
         }
 
-        // حفظ وتسجيل الدخول
-        function saveAndContinue() {
+        // ==================== [4] دالة حفظ وتسجيل الحسابات الجديدة والآدمن ====================
+        async function saveAndContinue() {
             let username = document.getElementById('username').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const password = document.getElementById('password').value.trim();
 
             if (phone === "" || password === "") {
-                alert("برجاء إدخال رقم الهاتف وكلمة المرور!");
+                alert("برجاء إدخال رقم الهاتف وكلمة المرور لتأمين الحساب!");
                 return;
             }
 
+            const systemState = await dbGet('system', 'state');
+            
+            // فحص بيانات المطور عبد الله للتسجيل كآدمن مطلق الصلاحيات
             let potentialId = (phone === "01065291468" && password === "qc314104") ? "#DEV77" : null;
-            if (potentialId && bannedUsers.includes(potentialId)) {
+            if (potentialId && systemState.bannedUsers.includes(potentialId)) {
                 alert("عذراً، هذا الحساب محظور حالياً من قبل الإدارة!");
                 return;
             }
 
-            let exists = accounts.find(acc => acc.phone === phone);
+            let accountsList = await dbGetAll('accounts');
+            let exists = accountsList.find(acc => acc.phone === phone);
+            
             if (exists && document.getElementById('registerTitle').innerText === "إضافة حساب جديد") {
-                alert("رقم الهاتف هذا مسجل بالفعل في الحساب الآخر!");
+                alert("رقم الهاتف هذا مسجل بالفعل للحساب الفعال حالياً!");
                 return;
             }
 
             let newAccount = {};
 
+            // إذا تم إدخال بيانات المطور الحقيقية يتم منحه رتبة الآدمن فوراً
             if (phone === "01065291468" && password === "qc314104") {
                 newAccount = {
                     name: "Developer Abdullah",
                     phone: phone,
                     avatar: adminAvatarUrl,
-                    status: "برمجة وتطوير وإصدار التطبيقات 👑🚀",
+                    status: "برمجة وتطوير وإصدار التطبيقات والمنصات التفاعلية 👑🚀",
                     isAdmin: true,
                     isVerified: true,
                     id: "#DEV77",
@@ -1261,16 +1336,24 @@
             }
 
             if (document.getElementById('registerTitle').innerText === "إضافة حساب جديد") {
-                accounts.push(newAccount);
-                activeIndex = accounts.length - 1;
+                await dbPut('accounts', newAccount);
+                accountsList = await dbGetAll('accounts');
+                systemState.activeIndex = accountsList.length - 1;
             } else {
-                accounts = [newAccount];
-                activeIndex = 0;
+                // مسح الحسابات السابقة لتسجيل حساب جديد مستقل ونقي
+                const transaction = db.transaction('accounts', 'readwrite');
+                transaction.objectStore('accounts').clear();
+                await transaction.complete;
+
+                await dbPut('accounts', newAccount);
+                accountsList = [newAccount];
+                systemState.activeIndex = 0;
             }
 
-            saveAccountsToStorage();
-            applyActiveAccountUI();
+            await dbPut('system', systemState);
+            applyActiveAccountUI(accountsList, systemState.activeIndex, systemState.bannedUsers);
 
+            // إعادة تعيين واجهة شاشة التسجيل لوضعها الافتراضي
             document.getElementById('registerTitle').innerText = "إنشاء ملف شخصي";
             document.getElementById('registerSubtitle').style.display = 'block';
             document.getElementById('nameInputGroup').style.display = 'block';
@@ -1279,19 +1362,15 @@
             document.getElementById('page1').style.display = 'none';
             document.getElementById('page2').style.display = 'flex';
 
-            checkForIncomingAlerts();
+            checkForIncomingAlerts(newAccount.id, systemState.pendingAlerts);
         }
 
-        function saveAccountsToStorage() {
-            localStorage.setItem('user_accounts', JSON.stringify(accounts));
-            localStorage.setItem('active_account_index', activeIndex);
-        }
+        // ==================== [5] تطبيق إعدادات واجهة المستخدم للحساب النشط ====================
+        async function applyActiveAccountUI(accountsList, activeIndex, bannedUsers) {
+            if (accountsList.length === 0) return;
+            const current = accountsList[activeIndex];
 
-        // تطبيق واجهة الحساب النشط
-        function applyActiveAccountUI() {
-            if (accounts.length === 0) return;
-            const current = accounts[activeIndex];
-
+            // التحقق من حالة الحظر قبل عرض واجهة الشات
             if (bannedUsers.includes(current.id)) {
                 document.getElementById('banScreenOverlay').style.display = 'flex';
                 return;
@@ -1302,26 +1381,13 @@
             document.getElementById('userHeaderName').innerText = current.name;
             document.getElementById('userHeaderAvatar').style.backgroundImage = `url('${current.avatar}')`;
 
-            if (current.chatBg) {
-                document.getElementById('chatScreen').style.backgroundImage = current.chatBg;
-            } else {
-                document.getElementById('chatScreen').style.backgroundImage = "none";
-            }
+            // تطبيق الخلفيات الفنية المخصصة للحساب والبنر
+            document.getElementById('chatScreen').style.backgroundImage = current.chatBg || "none";
+            document.getElementById('page2').style.backgroundImage = current.listBg || "none";
+            document.getElementById('mainHeader').style.backgroundImage = current.bannerBg || "none";
+            document.getElementById('chatHeaderBar').style.backgroundImage = current.bannerBg || "none";
 
-            if (current.listBg) {
-                document.getElementById('page2').style.backgroundImage = current.listBg;
-            } else {
-                document.getElementById('page2').style.backgroundImage = "none";
-            }
-
-            if (current.bannerBg) {
-                document.getElementById('mainHeader').style.backgroundImage = current.bannerBg;
-                document.getElementById('chatHeaderBar').style.backgroundImage = current.bannerBg;
-            } else {
-                document.getElementById('mainHeader').style.backgroundImage = "none";
-                document.getElementById('chatHeaderBar').style.backgroundImage = "none";
-            }
-
+            // إظهار لوحة التحكم بالآدمن عند تسجيل الدخول بحساب المطور
             if (current.isAdmin) {
                 document.getElementById('userHeaderAvatar').classList.add('admin-header-active');
                 document.getElementById('adminPanelIcon').style.display = 'block';
@@ -1332,23 +1398,24 @@
                 document.getElementById('adminDropdownItem').style.display = 'block';
             }
 
-            if (accounts.length > 1) {
-                document.getElementById('switchAccBtn').style.display = 'block';
-            } else {
-                document.getElementById('switchAccBtn').style.display = 'none';
-            }
+            // تفعيل زر التبديل السريع إذا كان هناك حسابين مسجلين
+            document.getElementById('switchAccBtn').style.display = (accountsList.length > 1) ? 'block' : 'none';
 
             buildChatsList();
         }
 
-        // بناء قائمة الشات والبحث
-        function buildChatsList(filterQuery = "") {
+        // ==================== [6] بناء وتحديث شاشة قائمة المحادثات (البحث والرسائل الأخيرة) ====================
+        async function buildChatsList(filterQuery = "") {
             const listContainer = document.getElementById('chatsList');
             listContainer.innerHTML = "";
-            const current = accounts[activeIndex];
+
+            const systemState = await dbGet('system', 'state');
+            const accountsList = await dbGetAll('accounts');
+            const current = accountsList[systemState.activeIndex];
 
             let itemsToDisplay = [];
 
+            // إذا لم يكن الحساب الفعال هو المطور، يتم تلقائياً إضافة المطور عبد الله لقائمة الشات للمراسلة
             if (!current.isAdmin) {
                 itemsToDisplay.push({
                     name: "Developer Abdullah",
@@ -1359,7 +1426,7 @@
                 });
             }
 
-            accounts.forEach(acc => {
+            accountsList.forEach(acc => {
                 if (acc.id !== current.id && acc.id !== "#DEV77") {
                     itemsToDisplay.push({
                         name: acc.name,
@@ -1371,6 +1438,7 @@
                 }
             });
 
+            // فلترة قائمة البحث بالاسم أو بمعرف الحساب الـ ID بدقة فائقة
             if (filterQuery.trim() !== "") {
                 const q = filterQuery.toLowerCase();
                 itemsToDisplay = itemsToDisplay.filter(item => 
@@ -1379,20 +1447,21 @@
             }
 
             if (itemsToDisplay.length === 0) {
-                listContainer.innerHTML = `<div class="empty-chats"><i class="fa-solid fa-folder-open" style="font-size: 24px; display: block; margin-bottom: 8px;"></i> لا توجد نتائج مطابقة لبحثك.</div>`;
+                listContainer.innerHTML = `<div class="empty-chats"><i class="fa-solid fa-folder-open" style="font-size: 24px; display: block; margin-bottom: 8px;"></i> لا توجد جهات اتصال مطابقة لبحثك حالياً.</div>`;
                 return;
             }
 
-            itemsToDisplay.forEach(item => {
-                if (bannedUsers.includes(item.id)) return; 
+            for (let item of itemsToDisplay) {
+                if (systemState.bannedUsers.includes(item.id)) continue;
 
                 const card = document.createElement('div');
                 card.className = "chat-card";
                 card.onclick = () => openChatWith(item.id, item.name, item.avatar);
 
+                // حساب أحدث رسالة مرسلة ديناميكياً من قاعدة البيانات
                 const chatKey = getChatKey(current.id, item.id);
-                const history = chatHistories[chatKey] || [];
-                const lastMsg = history.length > 0 ? history[history.length - 1].text : item.status;
+                const chatData = await dbGet('chats', chatKey) || { messages: [] };
+                const lastMsg = chatData.messages.length > 0 ? chatData.messages[chatData.messages.length - 1].text : item.status;
 
                 card.innerHTML = `
                     <div class="chat-card-avatar" style="background-image: url('${item.avatar}');"></div>
@@ -1408,30 +1477,37 @@
                     </div>
                 `;
                 listContainer.appendChild(card);
-            });
+            }
         }
 
+        // استدعاء الفلترة فور الكتابة في حقل البحث
         function filterChats() {
             const val = document.getElementById('searchBarInput').value;
             buildChatsList(val);
         }
 
-        function switchAccount() {
-            if (accounts.length < 2) return;
+        // ==================== [7] تبديل الحسابات الفعالة والتحقق من الحظر ====================
+        async function switchAccount() {
             const player = document.getElementById('profileAudioPlayer');
             player.pause();
             player.currentTime = 0;
 
-            activeIndex = (activeIndex === 0) ? 1 : 0;
-            saveAccountsToStorage();
-            applyActiveAccountUI();
-            alert(`تم التحويل والتبديل إلى الحساب: ${accounts[activeIndex].name}`);
-            checkForIncomingAlerts();
+            const systemState = await dbGet('system', 'state');
+            const accountsList = await dbGetAll('accounts');
+
+            systemState.activeIndex = (systemState.activeIndex === 0) ? 1 : 0;
+            await dbPut('system', systemState);
+
+            applyActiveAccountUI(accountsList, systemState.activeIndex, systemState.bannedUsers);
+            alert(`تم التبديل بنجاح إلى حساب: ${accountsList[systemState.activeIndex].name}`);
+            checkForIncomingAlerts(accountsList[systemState.activeIndex].id, systemState.pendingAlerts);
         }
 
-        function addNewAccountSetup() {
-            if (accounts.length >= 2) {
-                alert("خطأ: لقد وصلت للحد الأقصى المسموح به لحفظ الحسابات (حسابين فقط)!");
+        // إعدادات إضافة حساب ثانٍ للتطبيق بحد أقصى حسابين
+        async function addNewAccountSetup() {
+            const accountsList = await dbGetAll('accounts');
+            if (accountsList.length >= 2) {
+                alert("خطأ: لقد تجاوزت الحد الأقصى المسموح به لتسجيل الحسابات (حسابين فقط)!");
                 return;
             }
             closeSettingsModal();
@@ -1448,47 +1524,60 @@
             document.getElementById('page1').style.display = 'flex';
         }
 
-        function logoutCurrentAccount() {
+        // تسجيل الخروج التام من الحساب الفعال وحذفه
+        async function logoutCurrentAccount() {
             const player = document.getElementById('profileAudioPlayer');
             player.pause();
             player.currentTime = 0;
 
-            accounts.splice(activeIndex, 1);
-            activeIndex = 0;
+            const systemState = await dbGet('system', 'state');
+            const accountsList = await dbGetAll('accounts');
+            const current = accountsList[systemState.activeIndex];
 
-            if (accounts.length === 0) {
-                localStorage.clear();
+            await dbDelete('accounts', current.id);
+            const remainingAccounts = await dbGetAll('accounts');
+
+            systemState.activeIndex = 0;
+            await dbPut('system', systemState);
+
+            if (remainingAccounts.length === 0) {
+                const transaction = db.transaction(['accounts', 'chats', 'system'], 'readwrite');
+                transaction.objectStore('accounts').clear();
+                transaction.objectStore('chats').clear();
+                transaction.objectStore('system').clear();
                 location.reload();
             } else {
-                saveAccountsToStorage();
-                applyActiveAccountUI();
+                applyActiveAccountUI(remainingAccounts, 0, systemState.bannedUsers);
                 closeSettingsModal();
-                alert("تم تسجيل الخروج. تم تحويلك للحساب الآخر النشط تلقائياً.");
+                alert("تم تسجيل الخروج بنجاح.");
             }
         }
 
-        /* ==================== محرك الشات والرسائل الفعلي ==================== */
+        // ==================== [8] إدارة الشات وإرسال واستقبال الرسائل ====================
         function getChatKey(id1, id2) {
             return [id1, id2].sort().join('_');
         }
 
-        function openChatWith(targetId, targetName, targetAvatar) {
+        async function openChatWith(targetId, targetName, targetAvatar) {
             currentChatTargetId = targetId;
-            const current = accounts[activeIndex];
+            const systemState = await dbGet('system', 'state');
+            const accountsList = await dbGetAll('accounts');
+            const current = accountsList[systemState.activeIndex];
 
-            document.getElementById('chatHeaderName').innerHTML = `${targetName} ${targetId === '#DEV77' || (accounts.find(a=>a.id===targetId)&&accounts.find(a=>a.id===targetId).isVerified) ? '<span class="verified-badge"><i class="fa-solid fa-circle-check"></i></span>' : ''}`;
-            document.getElementById('chatHeaderAvatar').style.backgroundImage = `url('${targetAvatar}')`;
+            const isTargetVerified = targetId === '#DEV77' || (accountsList.find(a=>a.id===targetId) && accountsList.find(a=>a.id===targetId).isVerified);
+            document.getElementById('targetChatHeaderName').innerHTML = `${targetName} ${isTargetVerified ? '<span class="verified-badge"><i class="fa-solid fa-circle-check"></i></span>' : ''}`;
+            document.getElementById('targetChatHeaderAvatar').style.backgroundImage = `url('${targetAvatar}')`;
 
             const chatKey = getChatKey(current.id, targetId);
-            const history = chatHistories[chatKey] || [];
+            const chatData = await dbGet('chats', chatKey) || { messages: [] };
             
             const messagesContainer = document.getElementById('chatMessages');
             messagesContainer.innerHTML = "";
 
-            if (history.length === 0 && targetId === "#DEV77") {
+            if (chatData.messages.length === 0 && targetId === "#DEV77") {
                 messagesContainer.innerHTML = `<div class="msg received">أهلاً بك! أنا المطور عبد الله، كيف يمكنني مساعدتك اليوم في برمجة وتطوير تطبيقاتك؟ 🚀</div>`;
             } else {
-                history.forEach(msg => {
+                chatData.messages.forEach(msg => {
                     const msgDiv = document.createElement('div');
                     msgDiv.className = `msg ${msg.sender === current.id ? 'sent' : 'received'}`;
                     msgDiv.innerText = msg.text;
@@ -1506,63 +1595,26 @@
             buildChatsList();
         }
 
-        function openTargetProfileFromChat() {
-            if (!currentChatTargetId) return;
-
-            if (currentChatTargetId === "#DEV77") {
-                openAdminContact();
-                return;
-            }
-
-            const targetAccount = accounts.find(a => a.id === currentChatTargetId);
-            if (targetAccount) {
-                document.getElementById('modalAvatar').style.backgroundImage = `url('${targetAccount.avatar}')`;
-                document.getElementById('modalName').innerText = targetAccount.name;
-                document.getElementById('editNameInput').value = targetAccount.name;
-                document.getElementById('modalPhone').innerText = targetAccount.phone;
-                document.getElementById('modalId').innerText = targetAccount.id;
-                document.getElementById('statusInput').value = targetAccount.status;
-
-                const badgeSpan = document.getElementById('profileVerifiedBadge');
-                if (targetAccount.isVerified) {
-                    badgeSpan.innerHTML = `<span class="verified-badge"><i class="fa-solid fa-circle-check"></i></span>`;
-                    document.getElementById('modalAvatar').classList.add('admin-avatar-premium');
-                } else {
-                    badgeSpan.innerHTML = "";
-                    document.getElementById('modalAvatar').classList.remove('admin-avatar-premium');
-                }
-
-                document.getElementById('profileModal').style.display = 'flex';
-
-                const player = document.getElementById('profileAudioPlayer');
-                if (targetAccount.audio) {
-                    player.src = targetAccount.audio;
-                    player.play().catch(e => console.log("تفاعل مطلوب من المستخدم لتشغيل الصوت."));
-                } else {
-                    player.src = "";
-                }
-            }
-        }
-
-        function sendMessage() {
+        // حفظ الرسالة وإرسالها في قاعدة البيانات
+        async function sendMessage() {
             const input = document.getElementById('chatInput');
             const msgText = input.value.trim();
             if (msgText === "" || !currentChatTargetId) return;
 
-            const current = accounts[activeIndex];
-            const chatKey = getChatKey(current.id, currentChatTargetId);
+            const systemState = await dbGet('system', 'state');
+            const accountsList = await dbGetAll('accounts');
+            const current = accountsList[systemState.activeIndex];
 
-            if (!chatHistories[chatKey]) {
-                chatHistories[chatKey] = [];
-            }
+            const chatKey = getChatKey(current.id, currentChatTargetId);
+            const chatData = await dbGet('chats', chatKey) || { chatKey: chatKey, messages: [] };
 
             const newMsg = {
                 sender: current.id,
                 text: msgText,
                 timestamp: Date.now()
             };
-            chatHistories[chatKey].push(newMsg);
-            localStorage.setItem('chat_histories', JSON.stringify(chatHistories));
+            chatData.messages.push(newMsg);
+            await dbPut('chats', chatData);
 
             const messagesContainer = document.getElementById('chatMessages');
             const msgDiv = document.createElement('div');
@@ -1580,7 +1632,7 @@
             }
         }
 
-        /* ==================== لوحة تحكم الآدمن والتحكم بالـ ID والـ BAN والـ UNBAN ==================== */
+        // ==================== [9] لوحة تحكم الإدارة الكاملة للآدمن المطور ====================
         function openAdminPanel() {
             document.getElementById('adminPanelModal').style.display = 'flex';
         }
@@ -1593,101 +1645,113 @@
             if (event.target.id === 'adminPanelModal') closeAdminPanel();
         }
 
-        function adminVerifyUser() {
+        // تفعيل توثيق الحسابات
+        async function adminVerifyUser() {
             const targetId = document.getElementById('verifyTargetId').value.trim();
             if (targetId === "") {
-                alert("برجاء إدخال الـ ID أولاً!");
+                alert("يرجى إدخال معرّف الـ ID أولاً!");
                 return;
             }
 
-            let found = false;
-            accounts.forEach((acc, idx) => {
-                if (acc.id === targetId) {
-                    accounts[idx].isVerified = true;
-                    found = true;
-                }
-            });
+            const targetAcc = await dbGet('accounts', targetId);
+            if (targetAcc) {
+                targetAcc.isVerified = true;
+                await dbPut('accounts', targetAcc);
+                
+                const systemState = await dbGet('system', 'state');
+                const accountsList = await dbGetAll('accounts');
+                applyActiveAccountUI(accountsList, systemState.activeIndex, systemState.bannedUsers);
 
-            if (found) {
-                saveAccountsToStorage();
-                applyActiveAccountUI();
-                alert(`تم تفعيل شارة التوثيق بنجاح للحساب ذو المعرّف: ${targetId}`);
+                alert(`تم بنجاح تفعيل شارة التوثيق الذهبية للحساب: ${targetId}`);
                 document.getElementById('verifyTargetId').value = "";
             } else {
-                alert("لم يتم العثور على أي حساب يحمل هذا الـ ID في الذاكرة حالياً.");
+                alert("خطأ: لم يتم العثور على هذا الـ ID في قاعدة البيانات!");
             }
         }
 
-        function adminBanUser() {
+        // حظر حساب تماماً
+        async function adminBanUser() {
             const targetId = document.getElementById('banTargetId').value.trim();
             if (targetId === "") {
-                alert("برجاء إدخال الـ ID للحظر!");
+                alert("يرجى إدخال الـ ID لفرض الحظر!");
                 return;
             }
 
             if (targetId === "#DEV77") {
-                alert("خطأ: لا يمكن حظر حساب الآدمن المطور الرئيسي!");
+                alert("خطأ إداري: لا يمكن حظر حساب المطور الرئيسي للمنظومة!");
                 return;
             }
 
-            if (!bannedUsers.includes(targetId)) {
-                bannedUsers.push(targetId);
-                localStorage.setItem('banned_users', JSON.stringify(bannedUsers));
-                alert(`تم حظر المعرّف ${targetId} بنجاح وتحويل شاشته للوضع الطارئ!`);
+            const systemState = await dbGet('system', 'state');
+            if (!systemState.bannedUsers.includes(targetId)) {
+                systemState.bannedUsers.push(targetId);
+                await dbPut('system', systemState);
+
+                alert(`تم حظر المعرّف ${targetId} وإلغاء صلاحياته تماماً!`);
                 document.getElementById('banTargetId').value = "";
                 
-                applyActiveAccountUI();
+                const accountsList = await dbGetAll('accounts');
+                applyActiveAccountUI(accountsList, systemState.activeIndex, systemState.bannedUsers);
             } else {
-                alert("هذا المعرّف محظور بالفعل سابقاً!");
+                alert("عذراً، هذا المعرّف مسجل بالفعل بقائمة الحظر!");
             }
         }
 
-        function adminUnbanUser() {
+        // فك حظر الحسابات
+        async function adminUnbanUser() {
             const targetId = document.getElementById('unbanTargetId').value.trim();
             if (targetId === "") {
-                alert("برجاء كتابة الـ ID لفك الحظر!");
+                alert("يرجى إدخال المعرّف لفك الحظر!");
                 return;
             }
 
-            const index = bannedUsers.indexOf(targetId);
+            const systemState = await dbGet('system', 'state');
+            const index = systemState.bannedUsers.indexOf(targetId);
             if (index > -1) {
-                bannedUsers.splice(index, 1);
-                localStorage.setItem('banned_users', JSON.stringify(bannedUsers));
-                alert(`تم بنجاح إلغاء الحظر عن المعرّف ${targetId}! يمكنه استخدام التطبيق الآن بشكل طبيعي.`);
+                systemState.bannedUsers.splice(index, 1);
+                await dbPut('system', systemState);
+
+                alert(`تم إلغاء حظر المعرّف ${targetId} بنجاح!`);
                 document.getElementById('unbanTargetId').value = "";
-                applyActiveAccountUI();
+                
+                const accountsList = await dbGetAll('accounts');
+                applyActiveAccountUI(accountsList, systemState.activeIndex, systemState.bannedUsers);
             } else {
-                alert("هذا المعرّف ليس مسجلاً في قائمة المحظورين!");
+                alert("هذا المعرّف غير مسجل بقائمة الحظر!");
             }
         }
 
-        function adminSendAlert() {
+        // إرسال إشعار مفاجئ للمستهدف
+        async function adminSendAlert() {
             const targetId = document.getElementById('alertTargetId').value.trim();
             const text = document.getElementById('alertMessageText').value.trim();
 
             if (targetId === "" || text === "") {
-                alert("برجاء ملء خانة المعرّف ID ونص الرسالة بالكامل!");
+                alert("يرجى تعبئة كافة بيانات الإشعار المستهدف!");
                 return;
             }
 
-            pendingAlerts[targetId] = text;
-            localStorage.setItem('pending_alerts', JSON.stringify(pendingAlerts));
+            const systemState = await dbGet('system', 'state');
+            systemState.pendingAlerts[targetId] = text;
+            await dbPut('system', systemState);
 
-            alert(`تم توجيه وإرسال الإشعار بنجاح إلى المعرّف: ${targetId}.`);
+            alert(`تم بنجاح توجيه الإشعار الطارئ إلى المعرّف: ${targetId}`);
             document.getElementById('alertTargetId').value = "";
             document.getElementById('alertMessageText').value = "";
         }
 
-        function checkForIncomingAlerts() {
-            const current = accounts[activeIndex];
-            if (current && pendingAlerts[current.id]) {
-                const incomingMsg = pendingAlerts[current.id];
+        function checkForIncomingAlerts(currentId, pendingAlerts) {
+            if (currentId && pendingAlerts && pendingAlerts[currentId]) {
+                const incomingMsg = pendingAlerts[currentId];
                 
                 document.getElementById('alertPopupMessage').innerText = incomingMsg;
                 document.getElementById('alertPopupOverlay').style.display = 'flex';
 
-                delete pendingAlerts[current.id];
-                localStorage.setItem('pending_alerts', JSON.stringify(pendingAlerts));
+                delete pendingAlerts[currentId];
+                dbGet('system', 'state').then(systemState => {
+                    systemState.pendingAlerts = pendingAlerts;
+                    dbPut('system', systemState);
+                });
             }
         }
 
@@ -1695,10 +1759,9 @@
             document.getElementById('alertPopupOverlay').style.display = 'none';
         }
 
-        /* ==================== تخصيص الخلفيات والرسومات والنقوش ==================== */
+        // ==================== [10] إعدادات النقوش والبروفايل والأصوات ====================
         function openPatternSelector(type) {
             activeCustomizerType = type;
-            document.querySelectorAll('.pattern-option').forEach(el => el.classList.remove('selected'));
             document.getElementById('patternSelectorModal').style.display = 'flex';
         }
 
@@ -1710,8 +1773,11 @@
             if (event.target.id === 'patternSelectorModal') closePatternSelector();
         }
 
-        function applyPattern(styleNumber) {
-            const current = accounts[activeIndex];
+        // تطبيق النقش والخلفية الفنية المختارة
+        async function applyPattern(styleNumber) {
+            const systemState = await dbGet('system', 'state');
+            const accountsList = await dbGetAll('accounts');
+            const current = accountsList[systemState.activeIndex];
             let patternStyle = "";
 
             switch (styleNumber) {
@@ -1723,61 +1789,68 @@
                 case 6: patternStyle = "none"; break;
             }
 
+            const modifier = (styleNumber === 1 || styleNumber === 2) ? " / 20px 20px" : "";
+            const finalBg = patternStyle !== "none" ? patternStyle + modifier : "none";
+
             if (activeCustomizerType === 'chat') {
-                if (styleNumber === 1 || styleNumber === 2) {
-                    current.chatBg = `${patternStyle} / 20px 20px`;
-                } else {
-                    current.chatBg = patternStyle;
-                }
+                current.chatBg = finalBg;
             } else if (activeCustomizerType === 'list') {
-                if (styleNumber === 1 || styleNumber === 2) {
-                    current.listBg = `${patternStyle} / 20px 20px`;
-                } else {
-                    current.listBg = patternStyle;
-                }
+                current.listBg = finalBg;
             } else if (activeCustomizerType === 'banner') {
-                current.bannerBg = patternStyle;
+                current.bannerBg = finalBg;
             }
 
-            saveAccountsToStorage();
-            applyActiveAccountUI();
+            await dbPut('accounts', current);
+            applyActiveAccountUI(accountsList, systemState.activeIndex, systemState.bannedUsers);
             closePatternSelector();
-            alert("تم تطبيق التصميم المختار بنجاح!");
+            alert("تم بنجاح حفظ وتطبيق النقش المختار!");
         }
 
-        /* ==================== تعديل بروفايل المستخدم ونغمة الصوت ==================== */
-        function saveProfileNameChange(newName) {
+        // تعديل بيانات الملف الشخصي وحفظها تلقائياً
+        async function saveProfileNameChange(newName) {
             if (newName.trim() === "") return;
-            accounts[activeIndex].name = newName.trim();
-            saveAccountsToStorage();
-            applyActiveAccountUI();
+            const systemState = await dbGet('system', 'state');
+            const accountsList = await dbGetAll('accounts');
+            const current = accountsList[systemState.activeIndex];
+
+            current.name = newName.trim();
+            await dbPut('accounts', current);
+            applyActiveAccountUI(accountsList, systemState.activeIndex, systemState.bannedUsers);
         }
 
-        function updateStatus(val) {
-            accounts[activeIndex].status = val;
-            saveAccountsToStorage();
+        async function updateStatus(val) {
+            const systemState = await dbGet('system', 'state');
+            const accountsList = await dbGetAll('accounts');
+            const current = accountsList[systemState.activeIndex];
+
+            current.status = val;
+            await dbPut('accounts', current);
             buildChatsList();
         }
 
-        function handleAudioUpload(event) {
+        // رفع وحفظ الملف الصوتي والترحيب الخاص بكل حساب في قاعدة البيانات المدمجة
+        async function handleAudioUpload(event) {
             const file = event.target.files[0];
             if (file) {
                 document.getElementById('audioFilename').innerText = file.name;
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    const audioBase64 = e.target.result;
-                    accounts[activeIndex].audio = audioBase64;
-                    saveAccountsToStorage();
+                reader.onload = async function(e) {
+                    const systemState = await dbGet('system', 'state');
+                    const accountsList = await dbGetAll('accounts');
+                    const current = accountsList[systemState.activeIndex];
+
+                    current.audio = e.target.result;
+                    await dbPut('accounts', current);
 
                     const player = document.getElementById('profileAudioPlayer');
-                    player.src = audioBase64;
+                    player.src = e.target.result;
                     player.play();
-                }
+                };
                 reader.readAsDataURL(file);
             }
         }
 
-        /* ==================== عمليات التحكم بالقوائم والنوافذ ==================== */
+        // ==================== [11] إدارة فتح وإغلاق النوافذ المنبثقة ====================
         function toggleDropdown() {
             const menu = document.getElementById('dropdownMenu');
             menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
@@ -1800,9 +1873,10 @@
             if (event.target.id === 'settingsModal') closeSettingsModal();
         }
 
-        function openProfileModal() {
-            const modal = document.getElementById('profileModal');
-            const current = accounts[activeIndex];
+        async function openProfileModal() {
+            const systemState = await dbGet('system', 'state');
+            const accountsList = await dbGetAll('accounts');
+            const current = accountsList[systemState.activeIndex];
 
             document.getElementById('modalAvatar').style.backgroundImage = `url('${current.avatar}')`;
             document.getElementById('modalName').innerText = current.name;
@@ -1820,18 +1894,13 @@
                 document.getElementById('modalAvatar').classList.remove('admin-avatar-premium');
             }
 
-            if (current.audio) {
-                document.getElementById('audioFilename').innerText = "تم حفظ نغمة مخصصة";
-            } else {
-                document.getElementById('audioFilename').innerText = "لم يتم اختيار ملف صوتي";
-            }
-
-            modal.style.display = 'flex';
+            document.getElementById('audioFilename').innerText = current.audio ? "تم حفظ نغمة ترحيبية مخصصة" : "لم يتم اختيار ملف صوتي";
+            document.getElementById('profileModal').style.display = 'flex';
 
             const player = document.getElementById('profileAudioPlayer');
             if (current.audio) {
                 player.src = current.audio;
-                player.play().catch(e => console.log("تفاعل مطلوب للتشغيل التلقائي."));
+                player.play().catch(e => console.log("تحتاج لتفاعل المستخدم المباشر لتشغيل الصوت أول مرة."));
             } else {
                 player.src = "";
             }
@@ -1848,7 +1917,46 @@
             if (event.target.id === 'profileModal') closeProfileModal();
         }
 
-        /* ==================== نافذة الآدمن وتأثيرات الهدايا ==================== */
+        async function openTargetProfileFromChat() {
+            if (!currentChatTargetId) return;
+
+            if (currentChatTargetId === "#DEV77") {
+                openAdminContact();
+                return;
+            }
+
+            const accountsList = await dbGetAll('accounts');
+            const targetAccount = accountsList.find(a => a.id === currentChatTargetId);
+            if (targetAccount) {
+                document.getElementById('modalAvatar').style.backgroundImage = `url('${targetAccount.avatar}')`;
+                document.getElementById('modalName').innerText = targetAccount.name;
+                document.getElementById('editNameInput').value = targetAccount.name;
+                document.getElementById('modalPhone').innerText = targetAccount.phone;
+                document.getElementById('modalId').innerText = targetAccount.id;
+                document.getElementById('statusInput').value = targetAccount.status;
+
+                const badgeSpan = document.getElementById('profileVerifiedBadge');
+                if (targetAccount.isVerified) {
+                    badgeSpan.innerHTML = `<span class="verified-badge"><i class="fa-solid fa-circle-check"></i></span>`;
+                    document.getElementById('modalAvatar').classList.add('admin-avatar-premium');
+                } else {
+                    badgeSpan.innerHTML = "";
+                    document.getElementById('modalAvatar').classList.remove('admin-avatar-premium');
+                }
+
+                document.getElementById('profileModal').style.display = 'flex';
+
+                const player = document.getElementById('profileAudioPlayer');
+                if (targetAccount.audio) {
+                    player.src = targetAccount.audio;
+                    player.play().catch(e => console.log("تحتاج لتفاعل المستخدم لتشغيل الصوت."));
+                } else {
+                    player.src = "";
+                }
+            }
+        }
+
+        // إطلاق هدايا تيك توك ومؤثرات الاحتفال الخاصة بملف المطور
         function triggerTikTokGifts() {
             const container = document.getElementById('giftContainer');
             container.innerHTML = ""; 
@@ -1891,16 +1999,7 @@
             openChatWith("#DEV77", "Developer Abdullah", adminAvatarUrl);
         }
 
-        // البدء والتحميل
-        window.onload = function() {
-            if (accounts.length > 0) {
-                applyActiveAccountUI();
-                document.getElementById('page1').style.display = 'none';
-                document.getElementById('page2').style.display = 'flex';
-                checkForIncomingAlerts();
-            }
-        };
-
+        // إغلاق القوائم المنسدلة تلقائياً عند النقر الخارجي
         window.addEventListener('click', function(e) {
             if (!e.target.closest('.header-controls') && !e.target.closest('.dropdown-menu')) {
                 const menu = document.getElementById('dropdownMenu');
