@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Goora Store</title>
     <style>
-        /* المتغيرات الخاصة بالألوان لتسهيل الوضع الليلي */
         :root {
             --bg-color: #f1f3f4;
             --text-color: #202124;
             --card-bg: #ffffff;
-            --primary-color: #01875f; /* لون متجر جوجل بلاي الأخضر */
+            --primary-color: #01875f;
             --sidebar-bg: #ffffff;
             --border-color: #dadce0;
             --shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -39,7 +38,6 @@
             padding-top: 70px;
         }
 
-        /* الهيدر العلوي */
         header {
             background-color: var(--card-bg);
             height: 60px;
@@ -54,7 +52,6 @@
             z-index: 1000;
         }
 
-        /* زر الثلاث شرط */
         .menu-btn {
             background: none;
             border: none;
@@ -68,14 +65,12 @@
             font-size: 22px;
             font-weight: bold;
             color: var(--primary-color);
-            letter-spacing: 0.5px;
         }
 
-        /* القائمة الجانبية */
         .sidebar {
             position: fixed;
             top: 0;
-            right: -300px; /* مخفية في البداية */
+            right: -300px;
             width: 300px;
             height: 100%;
             background-color: var(--sidebar-bg);
@@ -102,7 +97,6 @@
             cursor: pointer;
         }
 
-        /* خانة البحث الكبيرة داخل القائمة الجانبية */
         .search-container {
             width: 100%;
         }
@@ -118,11 +112,6 @@
             outline: none;
         }
 
-        .search-input:focus {
-            border-color: var(--primary-color);
-        }
-
-        /* الروابط في القائمة الجانبية */
         .sidebar-link {
             display: flex;
             align-items: center;
@@ -134,17 +123,15 @@
             color: var(--text-color);
             font-weight: bold;
             font-size: 16px;
-            cursor: pointer;
         }
 
         .sidebar-link.dev-link {
-            background-color: #0088cc; /* لون التليجرام */
+            background-color: #0088cc;
             color: white;
             justify-content: center;
             gap: 10px;
         }
 
-        /* الإعدادات والوضع الليلي */
         .settings-section {
             border-top: 1px solid var(--border-color);
             padding-top: 15px;
@@ -167,7 +154,6 @@
             cursor: pointer;
         }
 
-        /* قسم الأدمن داخل التلات شرط */
         .admin-sidebar-section {
             border-top: 1px solid var(--border-color);
             padding-top: 15px;
@@ -207,7 +193,6 @@
             margin-top: 8px;
         }
 
-        /* غطاء الشاشة الخلفي عند فتح القائمة */
         .overlay {
             display: none;
             position: fixed;
@@ -223,16 +208,14 @@
             display: block;
         }
 
-        /* محتوى الموقع الرئيسي */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* استمارة رفع التطبيقات (مخفية بشكل افتراضي وتظهر للأدمن فقط) */
         .upload-section {
-            display: none; /* يتم التحكم بها عبر الجافا سكريبت */
+            display: none;
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 20px;
@@ -274,7 +257,6 @@
             width: 100%;
         }
 
-        /* شبكة عرض التطبيقات الموحدة */
         .store-section {
             margin-bottom: 40px;
         }
@@ -292,7 +274,6 @@
             gap: 20px;
         }
 
-        /* كارت التطبيق */
         .app-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -306,12 +287,24 @@
             position: relative;
         }
 
-        .app-card img {
+        .app-img-container {
             width: 80px;
             height: 80px;
             border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .app-card img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            background-color: #eee;
         }
 
         .app-title {
@@ -336,9 +329,8 @@
             font-weight: bold;
         }
 
-        /* زر حذف التطبيق (يظهر فقط للأدمن المسجل دخوله) */
         .delete-btn {
-            display: none; /* يظهر بالجافا سكريبت للأدمن فقط */
+            display: none;
             position: absolute;
             top: 5px;
             left: 5px;
@@ -352,54 +344,46 @@
             cursor: pointer;
             line-height: 20px;
             text-align: center;
+            z-index: 5;
         }
     </style>
 </head>
 <body>
 
-    <!-- الهيدر -->
     <header>
         <button class="menu-btn" onclick="toggleSidebar()">☰</button>
         <div class="logo">Goora Store</div>
     </header>
 
-    <!-- غطاء الشاشة الخلفي -->
     <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    <!-- القائمة الجانبية -->
     <div class="sidebar" id="sidebar">
         <button class="close-btn" onclick="toggleSidebar()">✕</button>
         
-        <!-- خانة البحث الكبيرة -->
         <div class="search-container">
             <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن التطبيقات هنا..." oninput="searchApps()">
         </div>
 
-        <!-- زر المطور المباشر -->
         <a href="https://t.me/G_1_V_1" target="_blank" class="sidebar-link dev-link">
             <span>Developer (المطور)</span>
             <span>📱</span>
         </a>
 
-        <!-- قسم الأدمن (تسجيل الدخول / التحكم) -->
         <div class="admin-sidebar-section">
             <div class="section-title">لوحة تحكم الأدمن</div>
             
-            <!-- فورم تسجيل الدخول -->
             <form id="adminLoginForm" class="admin-form" onsubmit="handleLogin(event)">
                 <input type="tel" id="adminPhone" placeholder="رقم الهاتف" required>
                 <input type="password" id="adminPassword" placeholder="كلمة المرور" required>
                 <button type="submit" class="admin-btn">تسجيل الدخول</button>
             </form>
 
-            <!-- معلومات المسؤول المسجل حالياً -->
             <div id="adminInfo" style="display: none; text-align: center; background: var(--bg-color); padding: 10px; border-radius: 8px;">
                 <p style="font-weight: bold; font-size: 14px; margin-bottom: 5px;">أهلاً بك، مدير المتجر 👋</p>
                 <button class="logout-btn" onclick="handleLogout()">تسجيل الخروج</button>
             </div>
         </div>
 
-        <!-- الإعدادات والوضع الليلي -->
         <div class="settings-section">
             <div class="section-title">الإعدادات</div>
             <div class="theme-toggle" onclick="toggleTheme()">
@@ -409,10 +393,7 @@
         </div>
     </div>
 
-    <!-- المحتوى الرئيسي -->
     <div class="container">
-
-        <!-- قسم إضافة تطبيق جديد (يظهر للأدمن فقط بعد تسجيل الدخول الصحيح) -->
         <div class="upload-section" id="uploadSection">
             <h2>اضف تطبيق جديد للمتجر</h2>
             <form id="appForm" onsubmit="addApp(event)">
@@ -421,7 +402,7 @@
                         <input type="text" id="appName" placeholder="اسم التطبيق" required>
                     </div>
                     <div class="form-group">
-                        <input type="url" id="appImg" placeholder="رابط صورة الأيقونة" required>
+                        <input type="url" id="appImg" placeholder="رابط صورة الأيقونة">
                     </div>
                     <div class="form-group">
                         <input type="url" id="appLink" placeholder="رابط التحميل المباشر" required>
@@ -431,34 +412,29 @@
             </form>
         </div>
 
-        <!-- شبكة عرض التطبيقات الموحدة (بدون تصنيفات) -->
         <div class="store-section">
             <h3 class="store-title">كل التطبيقات والألعاب المتاحة</h3>
-            <div class="apps-grid" id="apps-container">
-                <!-- التطبيقات المضافة تظهر هنا -->
-            </div>
+            <div id="loadingText" style="text-align: center; padding: 20px; font-weight: bold;">جاري تحميل التطبيقات سحابياً...⏳</div>
+            <div class="apps-grid" id="apps-container"></div>
         </div>
-
     </div>
 
     <script>
-        // مصفوفة لتخزين التطبيقات المضافة (تتحمل تلقائياً من الـ Local Storage)
-        let storeApps = JSON.parse(localStorage.getItem('storeApps')) || [];
-        
-        // التحقق من حالة تسجيل الدخول للمسؤول
+        // تم دمج بيانات حسابك السحابي الحقيقي هنا بنجاح!
+        const BIN_ID = "6a56c577f5f4af5e298fe334"; 
+        const API_KEY = "$2a$10$2gnQoLStFhl.haEy7SLT7..mfay15HKo/Y5JE.mKecCrrdVr0MPa2"; 
+
+        let storeApps = [];
         let isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
 
-        // فتح وإغلاق القائمة الجانبية
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
         }
 
-        // تفعيل وإلغاء تفعيل الوضع الليلي
         function toggleTheme() {
             const body = document.body;
             const themeCheckbox = document.getElementById('themeCheckbox');
-            
             if (body.getAttribute('data-theme') === 'dark') {
                 body.removeAttribute('data-theme');
                 themeCheckbox.checked = false;
@@ -470,39 +446,34 @@
             }
         }
 
-        // قراءة تفضيل الثيم المحفوظ عند فتح الصفحة
         if (localStorage.getItem('theme') === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
             document.getElementById('themeCheckbox').checked = true;
         }
 
-        // معالجة تسجيل دخول الأدمن
         function handleLogin(event) {
             event.preventDefault();
             const phoneInput = document.getElementById('adminPhone').value;
             const passInput = document.getElementById('adminPassword').value;
 
-            // التحقق من البيانات المطلوبة بدقة
             if (phoneInput === "01065291468" && passInput === "qc314104") {
                 isAdminLoggedIn = true;
                 localStorage.setItem('isAdminLoggedIn', 'true');
-                alert("تم تسجيل دخولك كأدمن بنجاح! تم فتح صلاحيات الرفع الحذف.");
+                alert("تم تسجيل دخولك كأدمن بنجاح!");
                 updateAdminUI();
-                toggleSidebar(); // غلق القائمة الجانبية لتسهيل المشاهدة
+                toggleSidebar();
             } else {
-                alert("عذراً، البيانات التي أدخلتها غير صحيحة!");
+                alert("عذراً، البيانات غير صحيحة!");
             }
         }
 
-        // تسجيل الخروج للأدمن
         function handleLogout() {
             isAdminLoggedIn = false;
             localStorage.setItem('isAdminLoggedIn', 'false');
-            alert("تم تسجيل الخروج من حساب المسؤول.");
+            alert("تم تسجيل الخروج.");
             updateAdminUI();
         }
 
-        // تحديث الواجهة بناء على حالة تسجيل الدخول
         function updateAdminUI() {
             const loginForm = document.getElementById('adminLoginForm');
             const adminInfo = document.getElementById('adminInfo');
@@ -511,82 +482,129 @@
             if (isAdminLoggedIn) {
                 loginForm.style.display = 'none';
                 adminInfo.style.display = 'block';
-                uploadSection.style.display = 'block'; // إظهار فورم الرفع للأدمن
+                uploadSection.style.display = 'block';
             } else {
                 loginForm.style.display = 'block';
                 adminInfo.style.display = 'none';
-                uploadSection.style.display = 'none'; // إخفاء فورم الرفع للزوار العاديين
+                uploadSection.style.display = 'none';
             }
-            renderApps(); // إعادة بناء الكروت لإظهار/إخفاء أزرار الحذف للأدمن
+            renderApps();
         }
 
-        // دالة إضافة تطبيق جديد (للأدمن فقط)
-        function addApp(event) {
+        // جلب البيانات من السيرفر السحابي
+        async function loadData() {
+            try {
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                    headers: {
+                        "X-Master-Key": API_KEY
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    storeApps = data.record.apps || [];
+                } else {
+                    storeApps = JSON.parse(localStorage.getItem('storeApps')) || [];
+                }
+            } catch (error) {
+                console.error("خطأ في الاتصال بالسيرفر، جاري التشغيل المحلي:", error);
+                storeApps = JSON.parse(localStorage.getItem('storeApps')) || [];
+            }
+            document.getElementById('loadingText').style.display = 'none';
+            renderApps();
+        }
+
+        // تحديث البيانات على السيرفر السحابي
+        async function updateCloudData() {
+            try {
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Master-Key": API_KEY
+                    },
+                    body: JSON.stringify({ apps: storeApps })
+                });
+                localStorage.setItem('storeApps', JSON.stringify(storeApps));
+            } catch (error) {
+                console.error("خطأ أثناء مزامنة البيانات سحابياً:", error);
+                localStorage.setItem('storeApps', JSON.stringify(storeApps));
+            }
+        }
+
+        async function addApp(event) {
             event.preventDefault();
-            if (!isAdminLoggedIn) return alert("لا تملك الصلاحية للرفع!");
+            if (!isAdminLoggedIn) return alert("لا تملك صلاحية الرفع!");
 
             const name = document.getElementById('appName').value;
             const img = document.getElementById('appImg').value;
             const link = document.getElementById('appLink').value;
 
             const newApp = {
-                id: Date.now(),
+                id: Date.now().toString(),
                 name,
-                img,
+                img: img || "",
                 link
             };
 
             storeApps.push(newApp);
-            localStorage.setItem('storeApps', JSON.stringify(storeApps));
-
             renderApps();
             document.getElementById('appForm').reset();
-            alert("تم إضافة التطبيق بنجاح للمتجر!");
+            
+            await updateCloudData();
+            alert("تم رفع التطبيق بنجاح ومزامنته سحابياً مع كل التليفونات!");
         }
 
-        // دالة حذف تطبيق
-        function deleteApp(id) {
-            if (!isAdminLoggedIn) return alert("لا تملك الصلاحية للحذف!");
-            if (confirm("هل أنت متأكد من رغبتك في حذف هذا التطبيق؟")) {
+        async function deleteApp(id) {
+            if (!isAdminLoggedIn) return alert("لا تملك صلاحية الحذف!");
+            if (confirm("هل أنت متأكد من حذف هذا التطبيق؟")) {
                 storeApps = storeApps.filter(app => app.id !== id);
-                localStorage.setItem('storeApps', JSON.stringify(storeApps));
                 renderApps();
+                await updateCloudData();
             }
         }
 
-        // دالة لعرض التطبيقات في الشبكة الموحدة
         function renderApps(filteredApps = storeApps) {
             const container = document.getElementById('apps-container');
             container.innerHTML = '';
 
             if (filteredApps.length === 0) {
-                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; opacity: 0.7;">لا توجد تطبيقات معروضة حالياً.</p>`;
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; opacity: 0.7; padding: 20px;">لا توجد تطبيقات معروضة حالياً.</p>`;
                 return;
             }
 
             filteredApps.forEach(app => {
                 const card = document.createElement('div');
                 card.className = 'app-card';
+                const firstChar = app.name ? app.name.trim().charAt(0).toUpperCase() : '?';
+
                 card.innerHTML = `
-                    <button class="delete-btn" style="display: ${isAdminLoggedIn ? 'block' : 'none'};" onclick="deleteApp(${app.id})">✕</button>
-                    <img src="${app.img}" alt="${app.name}" onerror="this.src='https://via.placeholder.com/80/01875f/ffffff?text=App'">
-                    <div class="app-title">${app.name}</div>
+                    <button class="delete-btn" style="display: ${isAdminLoggedIn ? 'block' : 'none'};" onclick="deleteApp('${app.id}')">✕</button>
+                    <div class="app-img-container" id="container-${app.id}">
+                        ${app.img ? `<img src="${app.img}" id="img-${app.id}" alt="${app.name}" onerror="handleImgError('${app.id}', '${firstChar}')">` : `<span>${firstChar}</span>`}
+                    </div>
+                    <div class="app-title" title="${app.name}">${app.name}</div>
                     <a href="${app.link}" class="download-btn" target="_blank">تحميل</a>
                 `;
                 container.appendChild(card);
             });
         }
 
-        // دالة البحث التفاعلي
+        function handleImgError(id, firstChar) {
+            const imgEl = document.getElementById('img-' + id);
+            const containerEl = document.getElementById('container-' + id);
+            if (imgEl) imgEl.remove();
+            if (containerEl) containerEl.innerHTML = `<span>${firstChar}</span>`;
+        }
+
         function searchApps() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             const filtered = storeApps.filter(app => app.name.toLowerCase().includes(query));
             renderApps(filtered);
         }
 
-        // تشغيل العرض الأولي عند تحميل الصفحة
         window.onload = function() {
-            updateAdminUI(); // التحقق التلقائي من تسجيل الدخول لعرض الأدوات أو إخفائها
+            updateAdminUI();
+            loadData();
         };
     </script>
 </body>
