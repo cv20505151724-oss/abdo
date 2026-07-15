@@ -3,609 +3,2064 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goora Store</title>
+    <title>واتساب المطور عبد الله - النسخة الاحترافية الكاملة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        :root {
-            --bg-color: #f1f3f4;
-            --text-color: #202124;
-            --card-bg: #ffffff;
-            --primary-color: #01875f;
-            --sidebar-bg: #ffffff;
-            --border-color: #dadce0;
-            --shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        [data-theme="dark"] {
-            --bg-color: #121212;
-            --text-color: #e8eaed;
-            --card-bg: #1e1e1e;
-            --sidebar-bg: #1e1e1e;
-            --border-color: #3c4043;
-            --shadow: 0 4px 12px rgba(0,0,0,0.5);
-        }
-
+        /* ==================== التنسيقات الأساسية وتصفير الأبعاد ==================== */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background-color 0.3s, color 0.3s;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding-top: 70px;
-        }
-
-        header {
-            background-color: var(--card-bg);
-            height: 60px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            background-color: #f0f2f5;
             display: flex;
+            justify-content: center;
             align-items: center;
-            padding: 0 20px;
-            box-shadow: var(--shadow);
-            z-index: 1000;
+            height: 100vh;
+            padding: 15px;
+            transition: background 0.3s;
         }
 
-        .menu-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--text-color);
-            cursor: pointer;
-            margin-left: 20px;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: -300px;
-            width: 300px;
-            height: 100%;
-            background-color: var(--sidebar-bg);
-            box-shadow: var(--shadow);
-            z-index: 1001;
-            transition: right 0.3s ease;
-            padding: 20px;
+        /* حاوية الصفحات الرئيسية لتناسب شاشات الهواتف والـ APK */
+        .page {
+            width: 100%;
+            max-width: 450px;
+            height: 92vh;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            overflow-y: auto;
+            position: relative;
+            background-size: cover;
+            background-position: center;
         }
 
-        .sidebar.active {
-            right: 0;
-        }
-
-        .close-btn {
-            align-self: flex-start;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--text-color);
-            cursor: pointer;
-        }
-
-        .search-container {
-            width: 100%;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-size: 16px;
-            outline: none;
-        }
-
-        .sidebar-link {
+        /* ==================== شاشة تسجيل الدخول وإنشاء الحساب ==================== */
+        .register-container {
+            padding: 30px 24px;
+            text-align: center;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--bg-color);
-            padding: 12px 15px;
-            border-radius: 8px;
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .sidebar-link.dev-link {
-            background-color: #0088cc;
-            color: white;
+            flex-direction: column;
             justify-content: center;
-            gap: 10px;
+            height: 100%;
         }
 
-        .settings-section {
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-        }
-
-        .section-title {
-            font-weight: bold;
-            margin-bottom: 12px;
-            font-size: 15px;
-            color: var(--primary-color);
-        }
-
-        .theme-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--bg-color);
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .admin-sidebar-section {
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-        }
-
-        .admin-form input {
-            width: 100%;
-            padding: 10px;
+        .register-container h2 {
+            color: #008069;
             margin-bottom: 8px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            outline: none;
+            font-size: 24px;
         }
 
-        .admin-btn {
-            width: 100%;
-            padding: 10px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
+        .register-container p {
+            color: #667781;
+            font-size: 14px;
+            margin-bottom: 25px;
         }
 
-        .logout-btn {
-            width: 100%;
-            padding: 10px;
-            background-color: #ff5252;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 8px;
+        /* رفع وتعديل الصورة الشخصية */
+        .avatar-upload {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 25px auto;
         }
 
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+        .avatar-preview {
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
+            border-radius: 50%;
+            background-color: #e9edef;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/149/149071.png');
+            background-size: cover;
+            background-position: center;
+            border: 3px solid #008069;
         }
 
-        .overlay.active {
-            display: block;
+        .avatar-edit {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background-color: #008069;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            color: white;
+            font-size: 14px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .upload-section {
+        .avatar-upload input {
             display: none;
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: var(--shadow);
-            margin-bottom: 40px;
         }
 
-        .upload-section h2 {
-            margin-bottom: 15px;
-            color: var(--primary-color);
+        .input-group {
+            margin-bottom: 18px;
+            text-align: right;
         }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #3b4a54;
+            font-weight: 600;
         }
 
-        .form-group input {
+        .input-group input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
+            padding: 12px 14px;
+            border: 1px solid #ced4da;
             border-radius: 8px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-size: 15px;
             outline: none;
+            transition: border-color 0.2s;
+            text-align: right;
+        }
+
+        .input-group input:focus {
+            border-color: #008069;
         }
 
         .submit-btn {
-            background-color: var(--primary-color);
+            width: 100%;
+            background-color: #008069;
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 14px;
             border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #005e4d;
+        }
+
+        /* ==================== شاشة قائمة الدردشات الرئيسية ==================== */
+        .chats-header {
+            background-color: #008069;
+            color: white;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .user-profile-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-header-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        /* تأثير التاج الدوار الخاص بالمطور */
+        .admin-header-active {
+            border: 2px solid transparent;
+            background-image: linear-gradient(#008069, #008069), radial-gradient(circle, #f7b10a, #ff007f, #00f0ff);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            animation: rotateBorder 3s linear infinite;
+        }
+
+        @keyframes rotateBorder {
+            100% { transform: rotate(360deg); }
+        }
+
+        .user-header-name {
             font-weight: bold;
             font-size: 16px;
-            width: 100%;
+            cursor: pointer;
         }
 
-        .store-section {
-            margin-bottom: 40px;
-        }
-
-        .store-title {
-            font-size: 22px;
-            margin-bottom: 20px;
-            border-right: 4px solid var(--primary-color);
-            padding-right: 10px;
-        }
-
-        .apps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 20px;
-        }
-
-        .app-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: var(--shadow);
+        .header-controls {
             display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .header-icon-btn {
+            font-size: 18px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.2s, color 0.2s;
+            color: #ffffff;
+        }
+
+        .header-icon-btn:hover {
+            color: #d1f4ec;
+        }
+
+        /* القائمة المنسدلة للخيارات */
+        .dropdown-menu {
+            position: absolute;
+            top: 55px;
+            left: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
             flex-direction: column;
+            width: 180px;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .dropdown-item {
+            padding: 12px 16px;
+            font-size: 14px;
+            color: #111b21;
+            cursor: pointer;
+            text-align: right;
+            transition: background 0.2s;
+            display: flex;
             align-items: center;
             gap: 10px;
-            position: relative;
         }
 
-        .app-img-container {
-            width: 80px;
-            height: 80px;
-            border-radius: 18px;
-            overflow: hidden;
+        .dropdown-item i {
+            color: #008069;
+            width: 20px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f2f5;
+        }
+
+        /* شريط البحث المطور */
+        .search-container {
+            padding: 8px 16px;
+            background-color: #fff;
+            border-bottom: 1px solid #f0f2f5;
+            display: none;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 8px 12px;
+            border: none;
+            background-color: #f0f2f5;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            text-align: right;
+        }
+
+        .chats-list {
+            flex: 1;
+            overflow-y: auto;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* كارت جهة الاتصال والدردشة الفرعي */
+        .chat-card {
             display: flex;
             align-items: center;
-            justify-content: center;
-            background-color: var(--primary-color);
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f2f5;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .chat-card:hover {
+            background-color: rgba(240, 242, 245, 0.8);
+        }
+
+        .chat-card-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            margin-left: 14px;
+            border: 1px solid #ced4da;
+        }
+
+        .chat-card-info {
+            flex: 1;
+            text-align: right;
+        }
+
+        .chat-card-name-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .chat-card-name {
+            font-weight: bold;
+            color: #111b21;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chat-card-badge {
+            background-color: #008069;
             color: white;
-            font-size: 32px;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
             font-weight: bold;
         }
 
-        .app-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .app-title {
-            font-size: 14px;
-            font-weight: bold;
+        .chat-card-subtext {
+            color: #667781;
+            font-size: 13px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            max-width: 280px;
+        }
+
+        .empty-chats {
+            text-align: center;
+            color: #8696a0;
+            font-size: 13px;
+            padding: 40px 20px;
+        }
+
+        .verified-badge {
+            color: #1d9bf0;
+            font-size: 14px;
+        }
+
+        /* ==================== شاشة المحادثة النشطة (Chat Screen) ==================== */
+        .chat-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #efeae2;
+            display: none;
+            flex-direction: column;
+            z-index: 30;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .chat-header {
+            background-color: #008069;
+            color: white;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .back-btn {
+            font-size: 18px;
+            cursor: pointer;
+            padding-left: 5px;
+        }
+
+        .chat-header-avatar-elem {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .chat-header-info {
+            flex: 1;
+            text-align: right;
+        }
+
+        .chat-header-name-elem {
+            font-weight: bold;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chat-header-status {
+            font-size: 11px;
+            color: #d1f4ec;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: rgba(239, 234, 226, 0.4);
+        }
+
+        /* رسائل الشات الحقيقية */
+        .msg {
+            max-width: 75%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.4;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .msg.received {
+            background-color: #ffffff;
+            align-self: flex-start;
+            border-top-left-radius: 0;
+            text-align: right;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .msg.sent {
+            background-color: #d9fdd3;
+            align-self: flex-end;
+            border-top-right-radius: 0;
+            text-align: right;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .chat-input-area {
+            background-color: #f0f2f5;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: none;
+            background-color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .send-btn {
+            background-color: #008069;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* ==================== النوافذ المنبثقة (Modals) ==================== */
+        .profile-modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 40;
+            padding: 20px;
+        }
+
+        .profile-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 380px;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            position: relative;
+            overflow-y: auto;
+            max-height: 90%;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            color: #667781;
+            z-index: 45;
+        }
+
+        .modal-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin: 0 auto 15px auto;
+            background-size: cover;
+            background-position: center;
+            border: 3px solid #008069;
+            position: relative;
+            z-index: 42;
+        }
+
+        .admin-avatar-premium {
+            border: 4px solid transparent;
+            background-image: linear-gradient(white, white), radial-gradient(circle at top left, #f7b10a, #ff007f, #00f0ff);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            box-shadow: 0 0 15px rgba(247, 177, 10, 0.6);
+            animation: rotateBorder 4s linear infinite;
+        }
+
+        .modal-name-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 5px;
+        }
+
+        .modal-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #111b21;
+        }
+
+        .modal-phone {
+            font-size: 13px;
+            color: #667781;
+            margin-bottom: 10px;
+        }
+
+        .modal-id {
+            font-size: 11px;
+            font-weight: bold;
+            background-color: #e9edef;
+            padding: 4px 8px;
+            border-radius: 12px;
+            display: inline-block;
+            color: #54656f;
+            margin-bottom: 15px;
+        }
+
+        .edit-profile-fields {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .edit-profile-fields label {
+            font-size: 12px;
+            color: #008069;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .edit-profile-fields input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        /* نظام الصوت المدمج */
+        .audio-section {
+            text-align: right;
+            margin-top: 15px;
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px dashed #008069;
+        }
+
+        .audio-section label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #008069;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .audio-input-btn {
+            background-color: #e7f3f0;
+            color: #008069;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            text-align: center;
             width: 100%;
         }
 
-        .download-btn {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            width: 95%;
-            text-align: center;
-            font-weight: bold;
+        .audio-input-btn input {
+            display: none;
         }
 
-        .delete-btn {
-            display: none;
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            background: #ff5252;
-            border: none;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
+        #audioFilename {
             font-size: 11px;
-            cursor: pointer;
-            line-height: 20px;
+            color: #667781;
+            display: block;
+            margin-top: 5px;
             text-align: center;
-            z-index: 5;
+        }
+
+        /* ==================== لوحة تحكم الإدارة (الآدمن) ==================== */
+        .admin-panel-card {
+            text-align: right;
+        }
+
+        .admin-section-title {
+            color: #008069;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 2px solid #e9edef;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-input-group {
+            margin-bottom: 12px;
+        }
+
+        .admin-input-group label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #3b4a54;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .admin-input-group input, .admin-input-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .admin-action-btn {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .admin-action-btn.verify-btn {
+            background-color: #1d9bf0;
+        }
+
+        .admin-action-btn.unban-btn {
+            background-color: #2e7d32;
+        }
+
+        .admin-action-btn.alert-btn {
+            background-color: #ff9800;
+        }
+
+        /* تأثيرات تيك توك الترحيبية */
+        .gift-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 41;
+            overflow: hidden;
+        }
+
+        .gift-item {
+            position: absolute;
+            font-size: 24px;
+            animation: fallAndFade 2.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .tiktok-announcement {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            background: linear-gradient(45deg, #ff0050, #00f2fe);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(255, 0, 80, 0.5);
+            z-index: 43;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        @keyframes fallAndFade {
+            0% { transform: translateY(-50px) scale(0.5) rotate(0deg); opacity: 0; }
+            15% { opacity: 1; transform: translateY(20px) scale(1.2) rotate(15deg); }
+            100% { transform: translateY(350px) scale(0.8) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes zoomAndSlide {
+            0% { transform: translateX(-50%) scale(0); opacity: 0; }
+            20% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+            30% { transform: translateX(-50%) scale(1); }
+            80% { transform: translateX(-50%) scale(1); opacity: 1; }
+            100% { transform: translateX(-50%) scale(0); opacity: 0; }
+        }
+
+        /* ==================== واجهة الإعدادات الفنية والتصميمية ==================== */
+        .settings-content-new {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .settings-row-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            text-align: right;
+            outline: none;
+        }
+
+        .settings-row-btn:active {
+            transform: scale(0.98);
+        }
+
+        .settings-row-btn i {
+            font-size: 16px;
+        }
+
+        .btn-add-account { background-color: #f4fbf7; color: #0f8b5a; }
+        .btn-chat-bg { background-color: #eef7fc; color: #2b70b5; }
+        .btn-list-bg { background-color: #eef7fc; color: #2b70b5; }
+        .btn-banner-bg { background-color: #eef7fc; color: #2b70b5; }
+        .btn-logout-new { background-color: #fff3f3; color: #d32f2f; }
+
+        .patterns-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .pattern-option {
+            height: 60px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            background-size: cover;
+            transition: border-color 0.2s;
+        }
+
+        .pattern-option.selected {
+            border-color: #008069;
+        }
+
+        /* نقوش فنية مجهزة مسبقاً للخلفيات */
+        .pattern-1 { background: radial-gradient(circle, #34495e 10%, transparent 11%), radial-gradient(circle, #34495e 10%, transparent 11%); background-size: 20px 20px; background-position: 0 0, 10px 10px; background-color: #2c3e50; }
+        .pattern-2 { background-image: linear-gradient(45deg, #e5e5e5 25%, transparent 25%), linear-gradient(-45deg, #e5e5e5 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e5e5e5 75%), linear-gradient(-45deg, transparent 75%, #e5e5e5 75%); background-size: 20px 20px; background-color: #f9f9f9; }
+        .pattern-3 { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
+        .pattern-4 { background: linear-gradient(135deg, #134e5e 0%, #71b280 100%); }
+        .pattern-5 { background: repeating-linear-gradient(45deg, #e7f3f0, #e7f3f0 10px, #ffffff 10px, #ffffff 20px); }
+        .pattern-6 { background: #efeae2; }
+
+        /* ==================== شاشة حظر المستخدمين (BAN SCREEN) ==================== */
+        .ban-screen-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #900c3f;
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            animation: redAlertBlink 0.6s infinite alternate;
+        }
+
+        @keyframes redAlertBlink {
+            0% { background-color: #900c3f; }
+            100% { background-color: #ff0000; }
+        }
+
+        .ban-title {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .ban-middle-finger {
+            font-size: 110px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
+            animation: pulseFinger 0.8s infinite alternate;
+            display: inline-block;
+        }
+
+        @keyframes pulseFinger {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+
+        .ban-subtext {
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            background-color: rgba(0,0,0,0.4);
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+
+        /* ==================== منبثق الإشعار المفاجئ ==================== */
+        .alert-popup-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 100;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .alert-popup-box {
+            background: linear-gradient(135deg, #ffffff, #f1f8e9);
+            border-left: 5px solid #008069;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 320px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 0; }
+            .page { height: 100vh; border-radius: 0; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-        <div class="logo">Goora Store</div>
-    </header>
+    <div class="page" id="page1">
+        <div class="register-container">
+            <h2 id="registerTitle">إنشاء ملف شخصي</h2>
+            <p id="registerSubtitle">يرجى إدخال بياناتك للبدء</p>
 
-    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
-
-    <div class="sidebar" id="sidebar">
-        <button class="close-btn" onclick="toggleSidebar()">✕</button>
-        
-        <div class="search-container">
-            <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن التطبيقات هنا..." oninput="searchApps()">
-        </div>
-
-        <a href="https://t.me/G_1_V_1" target="_blank" class="sidebar-link dev-link">
-            <span>Developer (المطور)</span>
-            <span>📱</span>
-        </a>
-
-        <div class="admin-sidebar-section">
-            <div class="section-title">لوحة تحكم الأدمن</div>
-            
-            <form id="adminLoginForm" class="admin-form" onsubmit="handleLogin(event)">
-                <input type="tel" id="adminPhone" placeholder="رقم الهاتف" required>
-                <input type="password" id="adminPassword" placeholder="كلمة المرور" required>
-                <button type="submit" class="admin-btn">تسجيل الدخول</button>
-            </form>
-
-            <div id="adminInfo" style="display: none; text-align: center; background: var(--bg-color); padding: 10px; border-radius: 8px;">
-                <p style="font-weight: bold; font-size: 14px; margin-bottom: 5px;">أهلاً بك، مدير المتجر 👋</p>
-                <button class="logout-btn" onclick="handleLogout()">تسجيل الخروج</button>
+            <div class="avatar-upload" id="avatarUploadContainer">
+                <div class="avatar-preview" id="imagePreview"></div>
+                <label for="imageInput" class="avatar-edit"><i class="fa-solid fa-camera"></i></label>
+                <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)">
             </div>
-        </div>
 
-        <div class="settings-section">
-            <div class="section-title">الإعدادات</div>
-            <div class="theme-toggle" onclick="toggleTheme()">
-                <span>الوضع الليلي</span>
-                <input type="checkbox" id="themeCheckbox" style="cursor: pointer;">
+            <div class="input-group" id="nameInputGroup">
+                <label for="username">الاسم الشخصي</label>
+                <input type="text" id="username" placeholder="اكتب اسمك هنا...">
             </div>
+
+            <div class="input-group">
+                <label for="phone">رقم الهاتف</label>
+                <input type="tel" id="phone" placeholder="01xxxxxxxxx" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">كلمة المرور</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+
+            <button class="submit-btn" onclick="saveAndContinue()">التسجيل والدخول</button>
         </div>
     </div>
 
-    <div class="container">
-        <div class="upload-section" id="uploadSection">
-            <h2>اضف تطبيق جديد للمتجر</h2>
-            <form id="appForm" onsubmit="addApp(event)">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <input type="text" id="appName" placeholder="اسم التطبيق" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="url" id="appImg" placeholder="رابط صورة الأيقونة">
-                    </div>
-                    <div class="form-group">
-                        <input type="url" id="appLink" placeholder="رابط التحميل المباشر" required>
-                    </div>
-                </div>
-                <button type="submit" class="submit-btn">رفع للمتجر فوراً</button>
-            </form>
+    <div class="page" id="page2" style="display: none;">
+        
+        <div class="ban-screen-overlay" id="banScreenOverlay">
+            <div class="ban-title">ف** يو</div>
+            <div class="ban-middle-finger">🖕</div>
+            <div class="ban-subtext">لقد تم حظر حسابك تماماً ومصادرة صلاحياتك البرمجية من قبل الإدارة!</div>
+            <button class="submit-btn" style="background-color: black; max-width: 250px;" onclick="logoutCurrentAccount()"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج والتخلص من الحظر</button>
         </div>
 
-        <div class="store-section">
-            <h3 class="store-title">كل التطبيقات والألعاب المتاحة</h3>
-            <div id="loadingText" style="text-align: center; padding: 20px; font-weight: bold;">جاري تحميل التطبيقات سحابياً...⏳</div>
-            <div class="apps-grid" id="apps-container"></div>
+        <div class="chats-header" id="mainHeader">
+            <div class="user-profile-info">
+                <div class="user-header-avatar" id="userHeaderAvatar" onclick="openProfileModal()"></div>
+                <div class="user-header-name" id="userHeaderName" onclick="openProfileModal()">المستخدم</div>
+            </div>
+            
+            <div class="header-controls">
+                <span class="header-icon-btn" id="adminPanelIcon" onclick="openAdminPanel()" title="لوحة التحكم بالآدمن" style="display: none;"><i class="fa-solid fa-crown" style="color: #f7b10a;"></i></span>
+                <span class="header-icon-btn" id="switchAccBtn" onclick="switchAccount()" title="تبديل الحساب" style="display: none;"><i class="fa-solid fa-arrows-rotate"></i></span>
+                <span class="header-icon-btn" onclick="toggleDropdown()"><i class="fa-solid fa-ellipsis-vertical"></i></span>
+            </div>
+
+            <div class="dropdown-menu" id="dropdownMenu">
+                <div class="dropdown-item" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i> البحث</div>
+                <div class="dropdown-item" id="adminDropdownItem" onclick="openAdminContact()"><i class="fa-solid fa-user-shield"></i> مراسلة المطور</div>
+                <div class="dropdown-item" onclick="openSettingsModal()"><i class="fa-solid fa-gear"></i> الإعدادات</div>
+            </div>
         </div>
+
+        <div class="search-container" id="searchContainer">
+            <input type="text" class="search-bar" id="searchBarInput" oninput="filterChats()" placeholder="ابحث بالاسم أو الـ ID (مثال: #1234)">
+        </div>
+
+        <div class="chats-list" id="chatsList"></div>
+
+        <div class="chat-screen" id="chatScreen">
+            <div class="chat-header" id="chatHeaderBar">
+                <div class="back-btn" onclick="closeChat()"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="chat-header-avatar-elem" id="targetChatHeaderAvatar" onclick="openTargetProfileFromChat()"></div>
+                <div class="chat-header-info">
+                    <div class="chat-header-name-elem" id="targetChatHeaderName" onclick="openTargetProfileFromChat()">الدردشة</div>
+                    <div class="chat-header-status">متصل حالياً</div>
+                </div>
+            </div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chatInput" placeholder="اكتب رسالة هنا..." onkeypress="handleChatKeyPress(event)">
+                <button class="send-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <div class="profile-modal" id="profileModal" onclick="closeProfileModalOutside(event)">
+            <div class="profile-card">
+                <span class="close-modal" onclick="closeProfileModal()"><i class="fa-solid fa-xmark"></i></span>
+                <div class="modal-avatar" id="modalAvatar"></div>
+                <div class="modal-name-container">
+                    <div class="modal-name" id="modalName">اسم المستخدم</div>
+                    <span id="profileVerifiedBadge"></span>
+                </div>
+                <div class="modal-phone" id="modalPhone">01xxxxxxxxx</div>
+                <div class="modal-id" id="modalId">ID: #---</div>
+
+                <div class="edit-profile-fields">
+                    <label>تعديل اسم الحساب:</label>
+                    <input type="text" id="editNameInput" onchange="saveProfileNameChange(this.value)">
+                </div>
+
+                <div class="edit-profile-fields">
+                    <label>تعديل الحالة الشخصية:</label>
+                    <input type="text" id="statusInput" value="متوفر حالياً" onchange="updateStatus(this.value)">
+                </div>
+
+                <div class="audio-section">
+                    <label><i class="fa-solid fa-music"></i> نغمة ترحيب البروفايل الصوتية</label>
+                    <label class="audio-input-btn">
+                         اختر ملف صوتي خاص بهذا الحساب
+                        <input type="file" id="audioInput" accept="audio/*" onchange="handleAudioUpload(event)">
+                    </label>
+                    <span id="audioFilename">لم يتم اختيار ملف صوتي</span>
+                    <audio id="profileAudioPlayer"></audio>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-modal" id="adminModal" onclick="closeAdminModalOutside(event)">
+            <div class="profile-card">
+                <div class="gift-container" id="giftContainer"></div>
+                <div class="tiktok-announcement" id="tiktokAnnouncement">✨ Developer Abdullah Joined the Room! 🚀</div>
+
+                <span class="close-modal" onclick="closeAdminModal()"><i class="fa-solid fa-xmark"></i></span>
+                <div class="modal-avatar admin-avatar-premium" style="background-image: url('https://i.ibb.co/tTHSpcbx/FB-IMG-1781216316215.jpg');"></div>
+                <div class="modal-name-container">
+                    <div class="modal-name" style="color: #008069; font-size: 20px;">Developer Abdullah</div>
+                    <span class="verified-badge"><i class="fa-solid fa-circle-check"></i></span>
+                </div>
+                <div class="modal-phone" style="letter-spacing: 0.5px;">Main Application Developer</div>
+                <div class="modal-id">ID: #DEV77</div>
+
+                <div class="status-section" style="background-color: #e7f3f0; text-align: right; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                    <label style="font-size: 11px; color: #008069; font-weight: bold; display: block; margin-bottom: 4px;">حالة المطور</label>
+                    <p style="font-size: 13px; color: #3b4a54; font-weight: bold; line-height: 1.5;">
+                       برمجة وتطوير وإصدار التطبيقات والمنصات التفاعلية 👑🚀
+                    </p>
+                </div>
+
+                <button class="submit-btn" onclick="startAdminChat()"><i class="fa-solid fa-comments"></i> بدء محادثة الآن</button>
+            </div>
+        </div>
+
+        <div class="profile-modal" id="adminPanelModal" onclick="closeAdminPanelModalOutside(event)">
+            <div class="profile-card admin-panel-card">
+                <span class="close-modal" onclick="closeAdminPanel()"><i class="fa-solid fa-xmark"></i></span>
+                <h3 style="color: #008069; margin-bottom: 20px; text-align: center;"><i class="fa-solid fa-crown"></i> لوحة التحكم بالمنظومة</h3>
+
+                <div class="admin-section-title"><i class="fa-solid fa-circle-check"></i> توثيق الحسابات (Verified)</div>
+                <div class="admin-input-group">
+                    <label>اكتب الـ ID الخاص بالحساب المراد توثيقه:</label>
+                    <input type="text" id="verifyTargetId" placeholder="مثال: #1234">
+                    <button class="admin-action-btn verify-btn" onclick="adminVerifyUser()"><i class="fa-solid fa-user-check"></i> تفعيل شارة التوثيق</button>
+                </div>
+
+                <div class="admin-section-title"><i class="fa-solid fa-user-slash"></i> حظر حساب (BAN)</div>
+                <div class="admin-input-group">
+                    <label>اكتب الـ ID الخاص بالحساب لحظره تماماً:</label>
+                    <input type="text" id="banTargetId" placeholder="مثال: #1234">
+                    <button class="admin-action-btn" onclick="adminBanUser()"><i class="fa-solid fa-ban"></i> حظر الحساب وسحب صلاحياته</button>
+                </div>
+
+                <div class="admin-section-title"><i class="fa-solid fa-user-check"></i> إلغاء الحظر عن حساب (UNBAN)</div>
+                <div class="admin-input-group">
+                    <label>اكتب الـ ID للحساب لفك حظره فوراً:</label>
+                    <input type="text" id="unbanTargetId" placeholder="مثال: #1234">
+                    <button class="admin-action-btn unban-btn" onclick="adminUnbanUser()"><i class="fa-solid fa-shield-halved"></i> إلغاء حظر الحساب (Unban)</button>
+                </div>
+
+                <div class="admin-section-title"><i class="fa-solid fa-bell"></i> إرسال إشعار فوري مستهدف</div>
+                <div class="admin-input-group">
+                    <label>اكتب الـ ID الخاص بالمستلم:</label>
+                    <input type="text" id="alertTargetId" placeholder="مثال: #1234">
+                    <label style="margin-top: 6px;">محتوى الإشعار المفاجئ:</label>
+                    <textarea id="alertMessageText" rows="2" style="width: 100%; border: 1px solid #ced4da; border-radius: 6px; padding: 8px;" placeholder="اكتب نص الرسالة المفاجئة هنا..."></textarea>
+                    <button class="admin-action-btn alert-btn" onclick="adminSendAlert()"><i class="fa-solid fa-paper-plane"></i> إرسال الإشعار فوراً</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-modal" id="settingsModal" onclick="closeSettingsModalOutside(event)">
+            <div class="profile-card">
+                <span class="close-modal" onclick="closeSettingsModal()"><i class="fa-solid fa-xmark"></i></span>
+                <h3 style="color: #008069; margin-bottom: 20px;"><i class="fa-solid fa-sliders"></i> الإعدادات العامة</h3>
+
+                <div class="settings-content-new">
+                    <button class="settings-row-btn btn-add-account" onclick="addNewAccountSetup()">
+                        <span><i class="fa-solid fa-user-plus" style="margin-left: 8px;"></i> إضافة حساب جديد (حد أقصى حسابين)</span>
+                        <i class="fa-solid fa-angle-left"></i>
+                    </button>
+                    
+                    <button class="settings-row-btn btn-chat-bg" onclick="openPatternSelector('chat')">
+                        <span><i class="fa-solid fa-image" style="margin-left: 8px;"></i> تغيير خلفية الشات (نقوش ورسومات)</span>
+                        <i class="fa-solid fa-angle-left"></i>
+                    </button>
+
+                    <button class="settings-row-btn btn-list-bg" onclick="openPatternSelector('list')">
+                        <span><i class="fa-solid fa-list-check" style="margin-left: 8px;"></i> تغيير خلفية قائمة المحادثات</span>
+                        <i class="fa-solid fa-angle-left"></i>
+                    </button>
+
+                    <button class="settings-row-btn btn-banner-bg" onclick="openPatternSelector('banner')">
+                        <span><i class="fa-solid fa-window-maximize" style="margin-left: 8px;"></i> تغيير البنر العلوي</span>
+                        <i class="fa-solid fa-angle-left"></i>
+                    </button>
+
+                    <button class="settings-row-btn btn-logout-new" onclick="logoutCurrentAccount()">
+                        <span><i class="fa-solid fa-arrow-right-from-bracket" style="margin-left: 8px;"></i> تسجيل الخروج من الحساب الحالي</span>
+                        <i class="fa-solid fa-angle-left"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-modal" id="patternSelectorModal" onclick="closePatternSelectorOutside(event)">
+            <div class="profile-card">
+                <span class="close-modal" onclick="closePatternSelector()"><i class="fa-solid fa-xmark"></i></span>
+                <h3 style="color: #008069; margin-bottom: 15px;"><i class="fa-solid fa-palette"></i> اختر التصميم أو النقش الفني</h3>
+                
+                <div class="patterns-grid">
+                    <div class="pattern-option pattern-1" onclick="applyPattern(1)"></div>
+                    <div class="pattern-option pattern-2" onclick="applyPattern(2)"></div>
+                    <div class="pattern-option pattern-3" onclick="applyPattern(3)"></div>
+                    <div class="pattern-option pattern-4" onclick="applyPattern(4)"></div>
+                    <div class="pattern-option pattern-5" onclick="applyPattern(5)"></div>
+                    <div class="pattern-option pattern-6" onclick="applyPattern(6)"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert-popup-overlay" id="alertPopupOverlay">
+            <div class="alert-popup-box">
+                <h3 style="color: #008069; margin-bottom: 10px;"><i class="fa-solid fa-bell"></i> إشعار مهم من المطور!</h3>
+                <p id="alertPopupMessage" style="font-size: 14px; color: #3b4a54; margin-bottom: 20px; line-height: 1.4;"></p>
+                <button class="submit-btn" style="margin-top: 0;" onclick="closeAlertPopup()"><i class="fa-solid fa-check"></i> حسناً، فهمت</button>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        // تم دمج بيانات حسابك السحابي الحقيقي هنا بنجاح!
-        const BIN_ID = "6a56c577f5f4af5e298fe334"; 
-        const API_KEY = "$2a$10$2gnQoLStFhl.haEy7SLT7..mfay15HKo/Y5JE.mKecCrrdVr0MPa2"; 
+        // تعريف الثوابت الهامة والروابط الافتراضية للـ API السحابي JSONBin
+        const BIN_ID = '6a56c577f5f4af5e298fe334';
+        const MASTER_KEY = '$2a$10$2gnQoLStFhl.haEy7SLT7..mfay15HKo/Y5JE.mKecCrrdVr0MPa2';
+        
+        const defaultAvatar = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+        const adminAvatarUrl = 'https://i.ibb.co/tTHSpcbx/FB-IMG-1781216316215.jpg';
+        
+        let selectedImageBase64 = "";
+        let currentChatTargetId = null;
+        let activeCustomizerType = "";
 
-        let storeApps = [];
-        let isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
+        // ذاكرة مؤقتة للبيانات السحابية
+        let cloudData = {
+            users: [],
+            chats: {},
+            system: { bannedUsers: [], pendingAlerts: {} }
+        };
 
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('overlay').classList.toggle('active');
-        }
+        // الذاكرة الفعالة محلياً لتخزين الجلسة الحالية وحسابات الجهاز الحالي
+        let localState = {
+            accounts: [],
+            activeIndex: 0
+        };
 
-        function toggleTheme() {
-            const body = document.body;
-            const themeCheckbox = document.getElementById('themeCheckbox');
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                themeCheckbox.checked = false;
-                localStorage.setItem('theme', 'light');
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                themeCheckbox.checked = true;
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.setAttribute('data-theme', 'dark');
-            document.getElementById('themeCheckbox').checked = true;
-        }
-
-        function handleLogin(event) {
-            event.preventDefault();
-            const phoneInput = document.getElementById('adminPhone').value;
-            const passInput = document.getElementById('adminPassword').value;
-
-            if (phoneInput === "01065291468" && passInput === "qc314104") {
-                isAdminLoggedIn = true;
-                localStorage.setItem('isAdminLoggedIn', 'true');
-                alert("تم تسجيل دخولك كأدمن بنجاح!");
-                updateAdminUI();
-                toggleSidebar();
-            } else {
-                alert("عذراً، البيانات غير صحيحة!");
-            }
-        }
-
-        function handleLogout() {
-            isAdminLoggedIn = false;
-            localStorage.setItem('isAdminLoggedIn', 'false');
-            alert("تم تسجيل الخروج.");
-            updateAdminUI();
-        }
-
-        function updateAdminUI() {
-            const loginForm = document.getElementById('adminLoginForm');
-            const adminInfo = document.getElementById('adminInfo');
-            const uploadSection = document.getElementById('uploadSection');
-
-            if (isAdminLoggedIn) {
-                loginForm.style.display = 'none';
-                adminInfo.style.display = 'block';
-                uploadSection.style.display = 'block';
-            } else {
-                loginForm.style.display = 'block';
-                adminInfo.style.display = 'none';
-                uploadSection.style.display = 'none';
-            }
-            renderApps();
-        }
-
-        // جلب البيانات من السيرفر السحابي
-        async function loadData() {
+        // ==================== [1] إدارة الاتصال بقاعدة بيانات JSONBin ====================
+        
+        // جلب البيانات بالكامل من السحاب
+        async function fetchCloudData() {
             try {
                 const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                    method: 'GET',
                     headers: {
-                        "X-Master-Key": API_KEY
+                        'X-Master-Key': MASTER_KEY
                     }
                 });
-                if (response.ok) {
-                    const data = await response.json();
-                    storeApps = data.record.apps || [];
-                } else {
-                    storeApps = JSON.parse(localStorage.getItem('storeApps')) || [];
-                }
+                const resJson = await response.json();
+                cloudData = resJson.record;
+                
+                // التأكد من تهيئة الهيكل الداخلي لمنع أي أخطاء
+                if (!cloudData.users) cloudData.users = [];
+                if (!cloudData.chats) cloudData.chats = {};
+                if (!cloudData.system) cloudData.system = { bannedUsers: [], pendingAlerts: {} };
+                
+                return cloudData;
             } catch (error) {
-                console.error("خطأ في الاتصال بالسيرفر، جاري التشغيل المحلي:", error);
-                storeApps = JSON.parse(localStorage.getItem('storeApps')) || [];
+                console.error("خطأ أثناء جلب البيانات السحابية:", error);
             }
-            document.getElementById('loadingText').style.display = 'none';
-            renderApps();
         }
 
-        // تحديث البيانات على السيرفر السحابي
+        // إرسال وتحديث البيانات إلى السحاب
         async function updateCloudData() {
             try {
                 await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
                     method: 'PUT',
                     headers: {
-                        "Content-Type": "application/json",
-                        "X-Master-Key": API_KEY
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': MASTER_KEY
                     },
-                    body: JSON.stringify({ apps: storeApps })
+                    body: JSON.stringify(cloudData)
                 });
-                localStorage.setItem('storeApps', JSON.stringify(storeApps));
             } catch (error) {
-                console.error("خطأ أثناء مزامنة البيانات سحابياً:", error);
-                localStorage.setItem('storeApps', JSON.stringify(storeApps));
+                console.error("خطأ أثناء تحديث البيانات على السحاب:", error);
             }
         }
 
-        async function addApp(event) {
-            event.preventDefault();
-            if (!isAdminLoggedIn) return alert("لا تملك صلاحية الرفع!");
-
-            const name = document.getElementById('appName').value;
-            const img = document.getElementById('appImg').value;
-            const link = document.getElementById('appLink').value;
-
-            const newApp = {
-                id: Date.now().toString(),
-                name,
-                img: img || "",
-                link
-            };
-
-            storeApps.push(newApp);
-            renderApps();
-            document.getElementById('appForm').reset();
-            
-            await updateCloudData();
-            alert("تم رفع التطبيق بنجاح ومزامنته سحابياً مع كل التليفونات!");
-        }
-
-        async function deleteApp(id) {
-            if (!isAdminLoggedIn) return alert("لا تملك صلاحية الحذف!");
-            if (confirm("هل أنت متأكد من حذف هذا التطبيق؟")) {
-                storeApps = storeApps.filter(app => app.id !== id);
-                renderApps();
-                await updateCloudData();
-            }
-        }
-
-        function renderApps(filteredApps = storeApps) {
-            const container = document.getElementById('apps-container');
-            container.innerHTML = '';
-
-            if (filteredApps.length === 0) {
-                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; opacity: 0.7; padding: 20px;">لا توجد تطبيقات معروضة حالياً.</p>`;
-                return;
+        // ==================== [2] تهيئة وإطلاق شاشات التطبيق ====================
+        async function initApp() {
+            // تحميل البيانات المخزنة محلياً بالجهاز (الملف الشخصي الفعال)
+            const savedLocal = localStorage.getItem("WhatsAppLocalState");
+            if (savedLocal) {
+                localState = JSON.parse(savedLocal);
             }
 
-            filteredApps.forEach(app => {
-                const card = document.createElement('div');
-                card.className = 'app-card';
-                const firstChar = app.name ? app.name.trim().charAt(0).toUpperCase() : '?';
+            // جلب البيانات من السيرفر
+            await fetchCloudData();
 
-                card.innerHTML = `
-                    <button class="delete-btn" style="display: ${isAdminLoggedIn ? 'block' : 'none'};" onclick="deleteApp('${app.id}')">✕</button>
-                    <div class="app-img-container" id="container-${app.id}">
-                        ${app.img ? `<img src="${app.img}" id="img-${app.id}" alt="${app.name}" onerror="handleImgError('${app.id}', '${firstChar}')">` : `<span>${firstChar}</span>`}
-                    </div>
-                    <div class="app-title" title="${app.name}">${app.name}</div>
-                    <a href="${app.link}" class="download-btn" target="_blank">تحميل</a>
-                `;
-                container.appendChild(card);
-            });
+            if (localState.accounts && localState.accounts.length > 0) {
+                // تصفية الحسابات المحلية للتأكد من أنها ما زالت موجودة على السيرفر
+                localState.accounts = localState.accounts.filter(localAcc => 
+                    cloudData.users.some(cloudAcc => cloudAcc.id === localAcc.id)
+                );
+                
+                if (localState.accounts.length === 0) {
+                    // إذا تم مسح الحسابات من السيرفر، يتم إعادة توجيه المستخدم لإنشاء حساب
+                    localStorage.removeItem("WhatsAppLocalState");
+                    showRegisterPage();
+                } else {
+                    if (localState.activeIndex >= localState.accounts.length) {
+                        localState.activeIndex = 0;
+                    }
+                    saveLocalState();
+                    applyActiveAccountUI();
+                    document.getElementById('page1').style.display = 'none';
+                    document.getElementById('page2').style.display = 'flex';
+                    checkForIncomingAlerts();
+                }
+            } else {
+                showRegisterPage();
+            }
+
+            // إطلاق مزامنة لحظية مستمرة كل 3 ثوانٍ لتحديث الشات فورياً!
+            setInterval(realtimeSync, 3000);
         }
 
-        function handleImgError(id, firstChar) {
-            const imgEl = document.getElementById('img-' + id);
-            const containerEl = document.getElementById('container-' + id);
-            if (imgEl) imgEl.remove();
-            if (containerEl) containerEl.innerHTML = `<span>${firstChar}</span>`;
+        function showRegisterPage() {
+            document.getElementById('page1').style.display = 'flex';
+            document.getElementById('page2').style.display = 'none';
         }
 
-        function searchApps() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = storeApps.filter(app => app.name.toLowerCase().includes(query));
-            renderApps(filtered);
+        function saveLocalState() {
+            localStorage.setItem("WhatsAppLocalState", JSON.stringify(localState));
+        }
+
+        // المزامنة التلقائية اللحظية (Real-time polling)
+        async function realtimeSync() {
+            if (document.getElementById('page2').style.display === 'flex') {
+                await fetchCloudData();
+                const currentAcc = localState.accounts[localState.activeIndex];
+                
+                // تحقق إذا كان حسابك قد تعرض للحظر أثناء استخدامك للتطبيق
+                if (currentAcc && cloudData.system.bannedUsers.includes(currentAcc.id)) {
+                    document.getElementById('banScreenOverlay').style.display = 'flex';
+                    return;
+                }
+
+                // تحديث الرسائل لو الشات مفتوح حالياً
+                if (currentChatTargetId) {
+                    const chatKey = getChatKey(currentAcc.id, currentChatTargetId);
+                    const chatData = cloudData.chats[chatKey] || { messages: [] };
+                    const messagesContainer = document.getElementById('chatMessages');
+                    
+                    // حساب عدد الرسائل الحالية لتحديث الشاشة في حال ورود رسالة جديدة فقط
+                    const currentUIMessagesCount = messagesContainer.getElementsByClassName('msg').length;
+                    
+                    if (chatData.messages.length !== currentUIMessagesCount) {
+                        renderCurrentChatMessages(chatData.messages, currentAcc.id);
+                    }
+                }
+                
+                buildChatsList();
+                checkForIncomingAlerts();
+            }
         }
 
         window.onload = function() {
-            updateAdminUI();
-            loadData();
+            initApp();
         };
+
+        // توليد معرّف ID فريد وعشوائي للمستخدم الجديد
+        function generateUniqueID() {
+            return '#' + Math.floor(1000 + Math.random() * 9000);
+        }
+
+        // معاينة الصورة الشخصية المختارة قبل الحفظ
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').style.backgroundImage = `url('${e.target.result}')`;
+                    selectedImageBase64 = e.target.result; 
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // ==================== [4] دالة حفظ وتسجيل الحسابات الجديدة والآدمن ====================
+        async function saveAndContinue() {
+            let username = document.getElementById('username').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (phone === "" || password === "") {
+                alert("برجاء إدخال رقم الهاتف وكلمة المرور لتأمين الحساب!");
+                return;
+            }
+
+            await fetchCloudData();
+            
+            // فحص بيانات المطور عبد الله للتسجيل كآدمن مطلق الصلاحيات
+            let potentialId = (phone === "01065291468" && password === "qc314104") ? "#DEV77" : null;
+            if (potentialId && cloudData.system.bannedUsers.includes(potentialId)) {
+                alert("عذراً، هذا الحساب محظور حالياً من قبل الإدارة!");
+                return;
+            }
+
+            let existsOnCloud = cloudData.users.find(acc => acc.phone === phone);
+            
+            if (existsOnCloud && document.getElementById('registerTitle').innerText === "إضافة حساب جديد") {
+                alert("رقم الهاتف هذا مسجل بالفعل!");
+                return;
+            }
+
+            let newAccount = {};
+
+            // إذا تم إدخال بيانات المطور الحقيقية يتم منحه رتبة الآدمن فوراً
+            if (phone === "01065291468" && password === "qc314104") {
+                newAccount = {
+                    name: "Developer Abdullah",
+                    phone: phone,
+                    avatar: adminAvatarUrl,
+                    status: "برمجة وتطوير وإصدار التطبيقات والمنصات التفاعلية 👑🚀",
+                    isAdmin: true,
+                    isVerified: true,
+                    id: "#DEV77",
+                    audio: "" 
+                };
+            } else {
+                if (username === "") username = "مستخدم جديد";
+                const calculatedId = generateUniqueID();
+                newAccount = {
+                    name: username,
+                    phone: phone,
+                    avatar: selectedImageBase64 || defaultAvatar,
+                    status: "متوفر حالياً",
+                    isAdmin: false,
+                    isVerified: false,
+                    id: calculatedId,
+                    audio: "" 
+                };
+            }
+
+            // حفظ الحساب على السحاب
+            if (!cloudData.users.some(u => u.id === newAccount.id)) {
+                cloudData.users.push(newAccount);
+            } else {
+                const uIdx = cloudData.users.findIndex(u => u.id === newAccount.id);
+                cloudData.users[uIdx] = newAccount;
+            }
+            await updateCloudData();
+
+            // الحفظ المحلي في المتصفح الفعال
+            if (document.getElementById('registerTitle').innerText === "إضافة حساب جديد") {
+                localState.accounts.push(newAccount);
+                localState.activeIndex = localState.accounts.length - 1;
+            } else {
+                localState.accounts = [newAccount];
+                localState.activeIndex = 0;
+            }
+
+            saveLocalState();
+            applyActiveAccountUI();
+
+            // إعادة تعيين واجهة شاشة التسجيل لوضعها الافتراضي
+            document.getElementById('registerTitle').innerText = "إنشاء ملف شخصي";
+            document.getElementById('registerSubtitle').style.display = 'block';
+            document.getElementById('nameInputGroup').style.display = 'block';
+            document.getElementById('avatarUploadContainer').style.display = 'block';
+
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').style.display = 'flex';
+
+            checkForIncomingAlerts();
+        }
+
+        // ==================== [5] تطبيق إعدادات واجهة المستخدم للحساب النشط ====================
+        async function applyActiveAccountUI() {
+            if (localState.accounts.length === 0) return;
+            const current = localState.accounts[localState.activeIndex];
+
+            // التحقق من حالة الحظر قبل عرض واجهة الشات
+            if (cloudData.system.bannedUsers.includes(current.id)) {
+                document.getElementById('banScreenOverlay').style.display = 'flex';
+                return;
+            } else {
+                document.getElementById('banScreenOverlay').style.display = 'none';
+            }
+
+            document.getElementById('userHeaderName').innerText = current.name;
+            document.getElementById('userHeaderAvatar').style.backgroundImage = `url('${current.avatar}')`;
+
+            // تطبيق الخلفيات الفنية المخصصة للحساب والبنر
+            document.getElementById('chatScreen').style.backgroundImage = current.chatBg || "none";
+            document.getElementById('page2').style.backgroundImage = current.listBg || "none";
+            document.getElementById('mainHeader').style.backgroundImage = current.bannerBg || "none";
+            document.getElementById('chatHeaderBar').style.backgroundImage = current.bannerBg || "none";
+
+            // إظهار لوحة التحكم بالآدمن عند تسجيل الدخول بحساب المطور
+            if (current.isAdmin) {
+                document.getElementById('userHeaderAvatar').classList.add('admin-header-active');
+                document.getElementById('adminPanelIcon').style.display = 'block';
+                document.getElementById('adminDropdownItem').style.display = 'none';
+            } else {
+                document.getElementById('userHeaderAvatar').classList.remove('admin-header-active');
+                document.getElementById('adminPanelIcon').style.display = 'none';
+                document.getElementById('adminDropdownItem').style.display = 'block';
+            }
+
+            // تفعيل زر التبديل السريع إذا كان هناك حسابين مسجلين
+            document.getElementById('switchAccBtn').style.display = (localState.accounts.length > 1) ? 'block' : 'none';
+
+            buildChatsList();
+        }
+
+        // ==================== [6] بناء وتحديث شاشة قائمة المحادثات (البحث والرسائل الأخيرة) ====================
+        async function buildChatsList(filterQuery = "") {
+            const listContainer = document.getElementById('chatsList');
+            if (!listContainer) return;
+            listContainer.innerHTML = "";
+
+            const current = localState.accounts[localState.activeIndex];
+            if (!current) return;
+
+            let itemsToDisplay = [];
+
+            // إذا لم يكن الحساب الفعال هو المطور، يتم تلقائياً إضافة المطور عبد الله لقائمة الشات للمراسلة
+            if (!current.isAdmin) {
+                itemsToDisplay.push({
+                    name: "Developer Abdullah",
+                    avatar: adminAvatarUrl,
+                    id: "#DEV77",
+                    status: "المطور الرئيسي للمنظومة 👑",
+                    isVerified: true
+                });
+            }
+
+            // عرض بقية المستخدمين المسجلين على السيرفر
+            cloudData.users.forEach(acc => {
+                if (acc.id !== current.id && acc.id !== "#DEV77") {
+                    itemsToDisplay.push({
+                        name: acc.name,
+                        avatar: acc.avatar,
+                        id: acc.id,
+                        status: acc.status,
+                        isVerified: acc.isVerified
+                    });
+                }
+            });
+
+            // فلترة قائمة البحث بالاسم أو بمعرف الحساب الـ ID بدقة فائقة
+            if (filterQuery.trim() !== "") {
+                const q = filterQuery.toLowerCase();
+                itemsToDisplay = itemsToDisplay.filter(item => 
+                    item.name.toLowerCase().includes(q) || item.id.toLowerCase().includes(q)
+                );
+            }
+
+            if (itemsToDisplay.length === 0) {
+                listContainer.innerHTML = `<div class="empty-chats"><i class="fa-solid fa-folder-open" style="font-size: 24px; display: block; margin-bottom: 8px;"></i> لا توجد جهات اتصال مطابقة لبحثك حالياً.</div>`;
+                return;
+            }
+
+            for (let item of itemsToDisplay) {
+                if (cloudData.system.bannedUsers.includes(item.id)) continue;
+
+                const card = document.createElement('div');
+                card.className = "chat-card";
+                card.onclick = () => openChatWith(item.id, item.name, item.avatar);
+
+                // حساب أحدث رسالة مرسلة ديناميكياً من السيرفر
+                const chatKey = getChatKey(current.id, item.id);
+                const chatData = cloudData.chats[chatKey] || { messages: [] };
+                const lastMsg = chatData.messages.length > 0 ? chatData.messages[chatData.messages.length - 1].text : item.status;
+
+                card.innerHTML = `
+                    <div class="chat-card-avatar" style="background-image: url('${item.avatar}');"></div>
+                    <div class="chat-card-info">
+                        <div class="chat-card-name-row">
+                            <span class="chat-card-name">
+                                ${item.name} 
+                                ${item.isVerified ? '<span class="verified-badge"><i class="fa-solid fa-circle-check"></i></span>' : ''}
+                            </span>
+                            <span class="chat-card-badge">${item.id}</span>
+                        </div>
+                        <div class="chat-card-subtext">${lastMsg}</div>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            }
+        }
+
+        // استدعاء الفلترة فور الكتابة في حقل البحث
+        function filterChats() {
+            const val = document.getElementById('searchBarInput').value;
+            buildChatsList(val);
+        }
+
+        // ==================== [7] تبديل الحسابات الفعالة والتحقق من الحظر ====================
+        async function switchAccount() {
+            const player = document.getElementById('profileAudioPlayer');
+            player.pause();
+            player.currentTime = 0;
+
+            localState.activeIndex = (localState.activeIndex === 0) ? 1 : 0;
+            saveLocalState();
+
+            applyActiveAccountUI();
+            alert(`تم التبديل بنجاح إلى حساب: ${localState.accounts[localState.activeIndex].name}`);
+            checkForIncomingAlerts();
+        }
+
+        // إعدادات إضافة حساب ثانٍ للتطبيق بحد أقصى حسابين
+        async function addNewAccountSetup() {
+            if (localState.accounts.length >= 2) {
+                alert("خطأ: لقد تجاوزت الحد الأقصى المسموح به لتسجيل الحسابات (حسابين فقط)!");
+                return;
+            }
+            closeSettingsModal();
+
+            document.getElementById('registerTitle').innerText = "إضافة حساب جديد";
+            document.getElementById('registerSubtitle').style.display = 'none';
+            document.getElementById('username').value = "";
+            document.getElementById('phone').value = "";
+            document.getElementById('password').value = "";
+            document.getElementById('imagePreview').style.backgroundImage = `url('${defaultAvatar}')`;
+            selectedImageBase64 = "";
+
+            document.getElementById('page2').style.display = 'none';
+            document.getElementById('page1').style.display = 'flex';
+        }
+
+        // تسجيل الخروج التام من الحساب الفعال وحذفه
+        async function logoutCurrentAccount() {
+            const player = document.getElementById('profileAudioPlayer');
+            player.pause();
+            player.currentTime = 0;
+
+            const current = localState.accounts[localState.activeIndex];
+            
+            // إزالة الحساب محلياً
+            localState.accounts.splice(localState.activeIndex, 1);
+            localState.activeIndex = 0;
+            saveLocalState();
+
+            if (localState.accounts.length === 0) {
+                localStorage.removeItem("WhatsAppLocalState");
+                location.reload();
+            } else {
+                applyActiveAccountUI();
+                closeSettingsModal();
+                alert("تم تسجيل الخروج بنجاح.");
+            }
+        }
+
+        // ==================== [8] إدارة الشات وإرسال واستقبال الرسائل ====================
+        function getChatKey(id1, id2) {
+            return [id1, id2].sort().join('_');
+        }
+
+        async function openChatWith(targetId, targetName, targetAvatar) {
+            currentChatTargetId = targetId;
+            const current = localState.accounts[localState.activeIndex];
+
+            const isTargetVerified = targetId === '#DEV77' || (cloudData.users.find(a=>a.id===targetId) && cloudData.users.find(a=>a.id===targetId).isVerified);
+            document.getElementById('targetChatHeaderName').innerHTML = `${targetName} ${isTargetVerified ? '<span class="verified-badge"><i class="fa-solid fa-circle-check"></i></span>' : ''}`;
+            document.getElementById('targetChatHeaderAvatar').style.backgroundImage = `url('${targetAvatar}')`;
+
+            const chatKey = getChatKey(current.id, targetId);
+            const chatData = cloudData.chats[chatKey] || { messages: [] };
+            
+            renderCurrentChatMessages(chatData.messages, current.id);
+
+            document.getElementById('chatScreen').style.display = 'flex';
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // رسم محتوى الرسائل داخل نافذة المحادثة المفتوحة
+        function renderCurrentChatMessages(messages, currentUserId) {
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.innerHTML = "";
+
+            if (messages.length === 0 && currentChatTargetId === "#DEV77") {
+                messagesContainer.innerHTML = `<div class="msg received">أهلاً بك! أنا المطور عبد الله، كيف يمكنني مساعدتك اليوم في برمجة وتطوير تطبيقاتك؟ 🚀</div>`;
+            } else {
+                messages.forEach(msg => {
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = `msg ${msg.sender === currentUserId ? 'sent' : 'received'}`;
+                    msgDiv.innerText = msg.text;
+                    messagesContainer.appendChild(msgDiv);
+                });
+            }
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function closeChat() {
+            document.getElementById('chatScreen').style.display = 'none';
+            currentChatTargetId = null;
+            buildChatsList();
+        }
+
+        // حفظ الرسالة وإرسالها في قاعدة البيانات السحابية
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const msgText = input.value.trim();
+            if (msgText === "" || !currentChatTargetId) return;
+
+            const current = localState.accounts[localState.activeIndex];
+            const chatKey = getChatKey(current.id, currentChatTargetId);
+            
+            if (!cloudData.chats[chatKey]) {
+                cloudData.chats[chatKey] = { chatKey: chatKey, messages: [] };
+            }
+
+            const newMsg = {
+                sender: current.id,
+                text: msgText,
+                timestamp: Date.now()
+            };
+            
+            cloudData.chats[chatKey].messages.push(newMsg);
+            
+            // تحديث الواجهة فوراً ومحلياً لسرعة الأداء
+            const messagesContainer = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'msg sent';
+            msgDiv.innerText = msgText;
+            messagesContainer.appendChild(msgDiv);
+
+            input.value = "";
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // إرسال البيانات فوراً إلى السيرفر
+            await updateCloudData();
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // ==================== [9] لوحة تحكم الإدارة الكاملة للآدمن المطور ====================
+        function openAdminPanel() {
+            document.getElementById('adminPanelModal').style.display = 'flex';
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('adminPanelModal').style.display = 'none';
+        }
+
+        function closeAdminPanelModalOutside(event) {
+            if (event.target.id === 'adminPanelModal') closeAdminPanel();
+        }
+
+        // تفعيل توثيق الحسابات
+        async function adminVerifyUser() {
+            const targetId = document.getElementById('verifyTargetId').value.trim();
+            if (targetId === "") {
+                alert("يرجى إدخال معرّف الـ ID أولاً!");
+                return;
+            }
+
+            const targetCloudIdx = cloudData.users.findIndex(u => u.id === targetId);
+            if (targetCloudIdx > -1) {
+                cloudData.users[targetCloudIdx].isVerified = true;
+                await updateCloudData();
+                
+                applyActiveAccountUI();
+                alert(`تم بنجاح تفعيل شارة التوثيق الذهبية للحساب: ${targetId}`);
+                document.getElementById('verifyTargetId').value = "";
+            } else {
+                alert("خطأ: لم يتم العثور على هذا الـ ID في قاعدة البيانات!");
+            }
+        }
+
+        // حظر حساب تماماً
+        async function adminBanUser() {
+            const targetId = document.getElementById('banTargetId').value.trim();
+            if (targetId === "") {
+                alert("يرجى إدخال الـ ID لفرض الحظر!");
+                return;
+            }
+
+            if (targetId === "#DEV77") {
+                alert("خطأ إداري: لا يمكن حظر حساب المطور الرئيسي للمنظومة!");
+                return;
+            }
+
+            if (!cloudData.system.bannedUsers.includes(targetId)) {
+                cloudData.system.bannedUsers.push(targetId);
+                await updateCloudData();
+
+                alert(`تم حظر المعرّف ${targetId} وإلغاء صلاحياته تماماً!`);
+                document.getElementById('banTargetId').value = "";
+                
+                applyActiveAccountUI();
+            } else {
+                alert("عذراً، هذا المعرّف مسجل بالفعل بقائمة الحظر!");
+            }
+        }
+
+        // فك حظر الحسابات
+        async function adminUnbanUser() {
+            const targetId = document.getElementById('unbanTargetId').value.trim();
+            if (targetId === "") {
+                alert("يرجى إدخال المعرّف لفك الحظر!");
+                return;
+            }
+
+            const index = cloudData.system.bannedUsers.indexOf(targetId);
+            if (index > -1) {
+                cloudData.system.bannedUsers.splice(index, 1);
+                await updateCloudData();
+
+                alert(`تم إلغاء حظر المعرّف ${targetId} بنجاح!`);
+                document.getElementById('unbanTargetId').value = "";
+                
+                applyActiveAccountUI();
+            } else {
+                alert("هذا المعرّف غير مسجل بقائمة الحظر!");
+            }
+        }
+
+        // إرسال إشعار مفاجئ للمستهدف
+        async function adminSendAlert() {
+            const targetId = document.getElementById('alertTargetId').value.trim();
+            const text = document.getElementById('alertMessageText').value.trim();
+
+            if (targetId === "" || text === "") {
+                alert("يرجى تعبئة كافة بيانات الإشعار المستهدف!");
+                return;
+            }
+
+            cloudData.system.pendingAlerts[targetId] = text;
+            await updateCloudData();
+
+            alert(`تم بنجاح توجيه الإشعار الطارئ إلى المعرّف: ${targetId}`);
+            document.getElementById('alertTargetId').value = "";
+            document.getElementById('alertMessageText').value = "";
+        }
+
+        // التحقق من وصول أي إشعار فوري من السيرفر وعرضه للمستخدم
+        function checkForIncomingAlerts() {
+            const current = localState.accounts[localState.activeIndex];
+            if (current && cloudData.system.pendingAlerts && cloudData.system.pendingAlerts[current.id]) {
+                const incomingMsg = cloudData.system.pendingAlerts[current.id];
+                
+                document.getElementById('alertPopupMessage').innerText = incomingMsg;
+                document.getElementById('alertPopupOverlay').style.display = 'flex';
+
+                // مسح الإشعار بمجرد قراءته لمنع تكرار ظهوره
+                delete cloudData.system.pendingAlerts[current.id];
+                updateCloudData();
+            }
+        }
+
+        function closeAlertPopup() {
+            document.getElementById('alertPopupOverlay').style.display = 'none';
+        }
+
+        // ==================== [10] إعدادات النقوش والبروفايل والأصوات ====================
+        function openPatternSelector(type) {
+            activeCustomizerType = type;
+            document.getElementById('patternSelectorModal').style.display = 'flex';
+        }
+
+        function closePatternSelector() {
+            document.getElementById('patternSelectorModal').style.display = 'none';
+        }
+
+        function closePatternSelectorOutside(event) {
+            if (event.target.id === 'patternSelectorModal') closePatternSelector();
+        }
+
+        // تطبيق النقش والخلفية الفنية المختارة وحفظها على السحاب
+        async function applyPattern(styleNumber) {
+            const current = localState.accounts[localState.activeIndex];
+            let patternStyle = "";
+
+            switch (styleNumber) {
+                case 1: patternStyle = "radial-gradient(circle, #34495e 10%, transparent 11%), radial-gradient(circle, #34495e 10%, transparent 11%)"; break;
+                case 2: patternStyle = "linear-gradient(45deg, #e5e5e5 25%, transparent 25%), linear-gradient(-45deg, #e5e5e5 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e5e5e5 75%), linear-gradient(-45deg, transparent 75%, #e5e5e5 75%)"; break;
+                case 3: patternStyle = "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)"; break;
+                case 4: patternStyle = "linear-gradient(135deg, #134e5e 0%, #71b280 100%)"; break;
+                case 5: patternStyle = "repeating-linear-gradient(45deg, #e7f3f0, #e7f3f0 10px, #ffffff 10px, #ffffff 20px)"; break;
+                case 6: patternStyle = "none"; break;
+            }
+
+            const modifier = (styleNumber === 1 || styleNumber === 2) ? " / 20px 20px" : "";
+            const finalBg = patternStyle !== "none" ? patternStyle + modifier : "none";
+
+            if (activeCustomizerType === 'chat') {
+                current.chatBg = finalBg;
+            } else if (activeCustomizerType === 'list') {
+                current.listBg = finalBg;
+            } else if (activeCustomizerType === 'banner') {
+                current.bannerBg = finalBg;
+            }
+
+            // تحديث السيرفر
+            const cloudIdx = cloudData.users.findIndex(u => u.id === current.id);
+            if (cloudIdx > -1) {
+                cloudData.users[cloudIdx] = current;
+                await updateCloudData();
+            }
+
+            saveLocalState();
+            applyActiveAccountUI();
+            closePatternSelector();
+            alert("تم بنجاح حفظ وتطبيق النقش المختار!");
+        }
+
+        // تعديل اسم الملف الشخصي وحفظه على السحاب
+        async function saveProfileNameChange(newName) {
+            if (newName.trim() === "") return;
+            const current = localState.accounts[localState.activeIndex];
+
+            current.name = newName.trim();
+            
+            const cloudIdx = cloudData.users.findIndex(u => u.id === current.id);
+            if (cloudIdx > -1) {
+                cloudData.users[cloudIdx] = current;
+                await updateCloudData();
+            }
+
+            saveLocalState();
+            applyActiveAccountUI();
+        }
+
+        // تعديل الحالة الشخصية وحفظها على السحاب
+        async function updateStatus(val) {
+            const current = localState.accounts[localState.activeIndex];
+
+            current.status = val;
+
+            const cloudIdx = cloudData.users.findIndex(u => u.id === current.id);
+            if (cloudIdx > -1) {
+                cloudData.users[cloudIdx] = current;
+                await updateCloudData();
+            }
+
+            saveLocalState();
+            buildChatsList();
+        }
+
+        // رفع وحفظ الملف الصوتي والترحيب الخاص بكل حساب على السحاب
+        async function handleAudioUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('audioFilename').innerText = file.name;
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    const current = localState.accounts[localState.activeIndex];
+
+                    current.audio = e.target.result;
+
+                    const cloudIdx = cloudData.users.findIndex(u => u.id === current.id);
+                    if (cloudIdx > -1) {
+                        cloudData.users[cloudIdx] = current;
+                        await updateCloudData();
+                    }
+
+                    saveLocalState();
+
+                    const player = document.getElementById('profileAudioPlayer');
+                    player.src = e.target.result;
+                    player.play();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // ==================== [11] إدارة فتح وإغلاق النوافذ المنبثقة ====================
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function toggleSearch() {
+            const searchContainer = document.getElementById('searchContainer');
+            searchContainer.style.display = (searchContainer.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function openSettingsModal() {
+            document.getElementById('settingsModal').style.display = 'flex';
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').style.display = 'none';
+        }
+
+        function closeSettingsModalOutside(event) {
+            if (event.target.id === 'settingsModal') closeSettingsModal();
+        }
+
+        async function openProfileModal() {
+            const current = localState.accounts[localState.activeIndex];
+
+            document.getElementById('modalAvatar').style.backgroundImage = `url('${current.avatar}')`;
+            document.getElementById('modalName').innerText = current.name;
+            document.getElementById('editNameInput').value = current.name;
+            document.getElementById('modalPhone').innerText = current.phone;
+            document.getElementById('modalId').innerText = current.id;
+            document.getElementById('statusInput').value = current.status;
+
+            const badgeSpan = document.getElementById('profileVerifiedBadge');
+            if (current.isVerified || current.isAdmin) {
+                badgeSpan.innerHTML = `<span class="verified-badge"><i class="fa-solid fa-circle-check"></i></span>`;
+                document.getElementById('modalAvatar').classList.add('admin-avatar-premium');
+            } else {
+                badgeSpan.innerHTML = "";
+                document.getElementById('modalAvatar').classList.remove('admin-avatar-premium');
+            }
+
+            document.getElementById('audioFilename').innerText = current.audio ? "تم حفظ نغمة ترحيبية مخصصة" : "لم يتم اختيار ملف صوتي";
+            document.getElementById('profileModal').style.display = 'flex';
+
+            const player = document.getElementById('profileAudioPlayer');
+            if (current.audio) {
+                player.src = current.audio;
+                player.play().catch(e => console.log("تحتاج لتفاعل المستخدم المباشر لتشغيل الصوت أول مرة."));
+            } else {
+                player.src = "";
+            }
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+            const player = document.getElementById('profileAudioPlayer');
+            player.pause();
+            player.currentTime = 0;
+        }
+
+        function closeProfileModalOutside(event) {
+            if (event.target.id === 'profileModal') closeProfileModal();
+        }
+
+        async function openTargetProfileFromChat() {
+            if (!currentChatTargetId) return;
+
+            if (currentChatTargetId === "#DEV77") {
+                openAdminContact();
+                return;
+            }
+
+            const targetAccount = cloudData.users.find(a => a.id === currentChatTargetId);
+            if (targetAccount) {
+                document.getElementById('modalAvatar').style.backgroundImage = `url('${targetAccount.avatar}')`;
+                document.getElementById('modalName').innerText = targetAccount.name;
+                document.getElementById('editNameInput').value = targetAccount.name;
+                document.getElementById('modalPhone').innerText = targetAccount.phone;
+                document.getElementById('modalId').innerText = targetAccount.id;
+                document.getElementById('statusInput').value = targetAccount.status;
+
+                const badgeSpan = document.getElementById('profileVerifiedBadge');
+                if (targetAccount.isVerified) {
+                    badgeSpan.innerHTML = `<span class="verified-badge"><i class="fa-solid fa-circle-check"></i></span>`;
+                    document.getElementById('modalAvatar').classList.add('admin-avatar-premium');
+                } else {
+                    badgeSpan.innerHTML = "";
+                    document.getElementById('modalAvatar').classList.remove('admin-avatar-premium');
+                }
+
+                document.getElementById('profileModal').style.display = 'flex';
+
+                const player = document.getElementById('profileAudioPlayer');
+                if (targetAccount.audio) {
+                    player.src = targetAccount.audio;
+                    player.play().catch(e => console.log("تحتاج لتفاعل المستخدم لتشغيل الصوت."));
+                } else {
+                    player.src = "";
+                }
+            }
+        }
+
+        // إطلاق هدايا تيك توك ومؤثرات الاحتفال الخاصة بملف المطور
+        function triggerTikTokGifts() {
+            const container = document.getElementById('giftContainer');
+            container.innerHTML = ""; 
+            const gifts = ['🚀', '❤️', '✨', '🎁', '🔥', '👑', '⭐'];
+            
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    const gift = document.createElement('div');
+                    gift.className = 'gift-item';
+                    gift.innerText = gifts[Math.floor(Math.random() * gifts.length)];
+                    gift.style.left = Math.random() * 85 + 5 + '%';
+                    gift.style.animationDuration = (Math.random() * 1.5 + 1.5) + 's';
+                    
+                    container.appendChild(gift);
+                    setTimeout(() => { gift.remove(); }, 3000);
+                }, i * 100);
+            }
+
+            const announcement = document.getElementById('tiktokAnnouncement');
+            announcement.style.animation = 'none';
+            announcement.offsetHeight; 
+            announcement.style.animation = 'zoomAndSlide 3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+        }
+
+        function openAdminContact() {
+            document.getElementById('adminModal').style.display = 'flex';
+            triggerTikTokGifts();
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').style.display = 'none';
+        }
+
+        function closeAdminModalOutside(event) {
+            if (event.target.id === 'adminModal') closeAdminModal();
+        }
+
+        function startAdminChat() {
+            closeAdminModal();
+            openChatWith("#DEV77", "Developer Abdullah", adminAvatarUrl);
+        }
+
+        // إغلاق القوائم المنسدلة تلقائياً عند النقر الخارجي
+        window.addEventListener('click', function(e) {
+            if (!e.target.closest('.header-controls') && !e.target.closest('.dropdown-menu')) {
+                const menu = document.getElementById('dropdownMenu');
+                if (menu && menu.style.display === 'flex') {
+                    menu.style.display = 'none';
+                }
+            }
+        });
     </script>
 </body>
 </html>
