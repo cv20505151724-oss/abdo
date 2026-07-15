@@ -179,17 +179,12 @@
             transition: transform 0.2s;
         }
 
-        /* تأثير التاج الدوار الخاص بالمطور */
+        /* تم إلغاء تأثير الدوران بناء على رغبتك مع الحفاظ على الإطار الجمالي */
         .admin-header-active {
             border: 2px solid transparent;
             background-image: linear-gradient(#008069, #008069), radial-gradient(circle, #f7b10a, #ff007f, #00f0ff);
             background-origin: border-box;
             background-clip: content-box, border-box;
-            animation: rotateBorder 3s linear infinite;
-        }
-
-        @keyframes rotateBorder {
-            100% { transform: rotate(360deg); }
         }
 
         .user-header-name {
@@ -532,13 +527,13 @@
             z-index: 42;
         }
 
+        /* تم إلغاء تأثير الدوران في الهيدر والبروفايل المطور */
         .admin-avatar-premium {
             border: 4px solid transparent;
             background-image: linear-gradient(white, white), radial-gradient(circle at top left, #f7b10a, #ff007f, #00f0ff);
             background-origin: border-box;
             background-clip: content-box, border-box;
             box-shadow: 0 0 15px rgba(247, 177, 10, 0.6);
-            animation: rotateBorder 4s linear infinite;
         }
 
         .modal-name-container {
@@ -1024,7 +1019,8 @@
                          اختر ملف صوتي خاص بهذا الحساب
                         <input type="file" id="audioInput" accept="audio/*" onchange="handleAudioUpload(event)">
                     </label>
-                    <span id="audioFilename">لم يتم اختيار ملف صوتي</span>
+                    <span id="audioFilename" style="margin-bottom: 8px;">لم يتم اختيار ملف صوتي</span>
+                    <button id="modalAudioPlayBtn" class="submit-btn" style="margin-top: 5px; padding: 6px; font-size: 12px; background-color: #008069;" onclick="toggleModalAudio()"><i class="fa-solid fa-play"></i> تشغيل النغمة</button>
                     <audio id="profileAudioPlayer"></audio>
                 </div>
             </div>
@@ -1220,7 +1216,7 @@
 
         // ==================== [2] تهيئة وإطلاق شاشات التطبيق ====================
         async function initApp() {
-            // تحميل البيانات المخزنة محلياً بالجهاز (الملف الشخصي الفعال)
+            // تحميل البيانات المخزنة محلياً بالجهاز
             const savedLocal = localStorage.getItem("WhatsAppLocalState");
             if (savedLocal) {
                 localState = JSON.parse(savedLocal);
@@ -1230,13 +1226,18 @@
             await fetchCloudData();
 
             if (localState.accounts && localState.accounts.length > 0) {
-                // تصفية الحسابات المحلية للتأكد من أنها ما زالت موجودة على السيرفر
-                localState.accounts = localState.accounts.filter(localAcc => 
-                    cloudData.users.some(cloudAcc => cloudAcc.id === localAcc.id)
-                );
+                // تصفية وتحديث البيانات المحلية ومزامنتها مباشرة ببيانات السحابة
+                localState.accounts = localState.accounts.filter(localAcc => {
+                    const cloudUser = cloudData.users.find(cloudAcc => cloudAcc.id === localAcc.id);
+                    if (cloudUser) {
+                        // تحديث الخصائص الهامة للبروفايل المحلي من السيرفر تلقائياً
+                        Object.assign(localAcc, cloudUser);
+                        return true;
+                    }
+                    return false;
+                });
                 
                 if (localState.accounts.length === 0) {
-                    // إذا تم مسح الحسابات من السيرفر، يتم إعادة توجيه المستخدم لإنشاء حساب
                     localStorage.removeItem("WhatsAppLocalState");
                     showRegisterPage();
                 } else {
@@ -1253,7 +1254,7 @@
                 showRegisterPage();
             }
 
-            // إطلاق مزامنة لحظية مستمرة كل 3 ثوانٍ لتحديث الشات فورياً!
+            // إطلاق مزامنة لحظية مستمرة كل 3 ثوانٍ
             setInterval(realtimeSync, 3000);
         }
 
@@ -1272,10 +1273,21 @@
                 await fetchCloudData();
                 const currentAcc = localState.accounts[localState.activeIndex];
                 
-                // تحقق إذا كان حسابك قد تعرض للحظر أثناء استخدامك للتطبيق
-                if (currentAcc && cloudData.system.bannedUsers.includes(currentAcc.id)) {
-                    document.getElementById('banScreenOverlay').style.display = 'flex';
-                    return;
+                if (currentAcc) {
+                    // مزامنة حالة الحساب الحالي مع أي تغييرات إدارية من السيرفر (توثيق، حظر، نغمة إلخ)
+                    const cloudUser = cloudData.users.find(u => u.id === currentAcc.id);
+                    if (cloudUser) {
+                        Object.assign(currentAcc, cloudUser);
+                        saveLocalState();
+                    }
+
+                    // تحقق إذا كان حسابك قد تعرض للحظر أثناء استخدامك للتطبيق
+                    if (cloudData.system.bannedUsers.includes(currentAcc.id)) {
+                        document.getElementById('banScreenOverlay').style.display = 'flex';
+                        return;
+                    } else {
+                        document.getElementById('banScreenOverlay').style.display = 'none';
+                    }
                 }
 
                 // تحديث الرسائل لو الشات مفتوح حالياً
@@ -1284,7 +1296,6 @@
                     const chatData = cloudData.chats[chatKey] || { messages: [] };
                     const messagesContainer = document.getElementById('chatMessages');
                     
-                    // حساب عدد الرسائل الحالية لتحديث الشاشة في حال ورود رسالة جديدة فقط
                     const currentUIMessagesCount = messagesContainer.getElementsByClassName('msg').length;
                     
                     if (chatData.messages.length !== currentUIMessagesCount) {
@@ -1319,7 +1330,7 @@
             }
         }
 
-        // ==================== [4] دالة حفظ وتسجيل الحسابات الجديدة والآدمن ====================
+        // ==================== [4] دالة حفظ وتسجيل الحسابات بنظام الدخول الذكي ====================
         async function saveAndContinue() {
             let username = document.getElementById('username').value.trim();
             const phone = document.getElementById('phone').value.trim();
@@ -1332,13 +1343,7 @@
 
             await fetchCloudData();
             
-            // فحص بيانات المطور عبد الله للتسجيل كآدمن مطلق الصلاحيات
-            let potentialId = (phone === "01065291468" && password === "qc314104") ? "#DEV77" : null;
-            if (potentialId && cloudData.system.bannedUsers.includes(potentialId)) {
-                alert("عذراً، هذا الحساب محظور حالياً من قبل الإدارة!");
-                return;
-            }
-
+            // فحص وجود الحساب مسبقاً على السحابة (لمنع إنشاء حسابات مكررة وتسجيل الدخول المباشر)
             let existsOnCloud = cloudData.users.find(acc => acc.phone === phone);
             
             if (existsOnCloud && document.getElementById('registerTitle').innerText === "إضافة حساب جديد") {
@@ -1348,44 +1353,79 @@
 
             let newAccount = {};
 
-            // إذا تم إدخال بيانات المطور الحقيقية يتم منحه رتبة الآدمن فوراً
-            if (phone === "01065291468" && password === "qc314104") {
-                newAccount = {
-                    name: "Developer Abdullah",
-                    phone: phone,
-                    avatar: adminAvatarUrl,
-                    status: "برمجة وتطوير وإصدار التطبيقات والمنصات التفاعلية 👑🚀",
-                    isAdmin: true,
-                    isVerified: true,
-                    id: "#DEV77",
-                    audio: "" 
-                };
+            // نظام تحقق وتسجيل الدخول التلقائي في حال كان الهاتف مسجلاً بالفعل
+            if (existsOnCloud && document.getElementById('registerTitle').innerText !== "إضافة حساب جديد") {
+                if (existsOnCloud.password && existsOnCloud.password !== password) {
+                    alert("عذراً، كلمة المرور المدخلة خاطئة لهذا الرقم!");
+                    return;
+                }
+                newAccount = existsOnCloud;
             } else {
-                if (username === "") username = "مستخدم جديد";
-                const calculatedId = generateUniqueID();
-                newAccount = {
-                    name: username,
-                    phone: phone,
-                    avatar: selectedImageBase64 || defaultAvatar,
-                    status: "متوفر حالياً",
-                    isAdmin: false,
-                    isVerified: false,
-                    id: calculatedId,
-                    audio: "" 
-                };
+                // فحص بيانات المطور عبد الله للتسجيل كآدمن مطلق الصلاحيات
+                let potentialId = (phone === "01065291468" && password === "qc314104") ? "#DEV77" : null;
+                if (potentialId && cloudData.system.bannedUsers.includes(potentialId)) {
+                    alert("عذراً، هذا الحساب محظور حالياً من قبل الإدارة!");
+                    return;
+                }
+
+                // إنشاء حساب جديد كلياً
+                if (phone === "01065291468" && password === "qc314104") {
+                    newAccount = {
+                        name: "Developer Abdullah",
+                        phone: phone,
+                        password: password,
+                        avatar: adminAvatarUrl,
+                        status: "برمجة وتطوير وإصدار التطبيقات والمنصات التفاعلية 👑🚀",
+                        isAdmin: true,
+                        isVerified: true,
+                        id: "#DEV77",
+                        audio: "" 
+                    };
+                } else {
+                    if (username === "") username = "مستخدم جديد";
+                    const calculatedId = generateUniqueID();
+                    newAccount = {
+                        name: username,
+                        phone: phone,
+                        password: password,
+                        avatar: selectedImageBase64 || defaultAvatar,
+                        status: "متوفر حالياً",
+                        isAdmin: false,
+                        isVerified: false,
+                        id: calculatedId,
+                        audio: "" 
+                    };
+                }
+
+                // حفظ الحساب على السيرفر السحابي
+                if (!cloudData.users.some(u => u.id === newAccount.id)) {
+                    cloudData.users.push(newAccount);
+                } else {
+                    const uIdx = cloudData.users.findIndex(u => u.id === newAccount.id);
+                    cloudData.users[uIdx] = newAccount;
+                }
+                await updateCloudData();
             }
 
-            // حفظ الحساب على السحاب
-            if (!cloudData.users.some(u => u.id === newAccount.id)) {
-                cloudData.users.push(newAccount);
-            } else {
-                const uIdx = cloudData.users.findIndex(u => u.id === newAccount.id);
-                cloudData.users[uIdx] = newAccount;
+            // فحص الحظر الفوري قبل الدخول
+            if (cloudData.system.bannedUsers.includes(newAccount.id)) {
+                document.getElementById('banScreenOverlay').style.display = 'flex';
+                document.getElementById('page1').style.display = 'none';
+                document.getElementById('page2').style.display = 'flex';
+                
+                localState.accounts = [newAccount];
+                localState.activeIndex = 0;
+                saveLocalState();
+                return;
             }
-            await updateCloudData();
 
             // الحفظ المحلي في المتصفح الفعال
             if (document.getElementById('registerTitle').innerText === "إضافة حساب جديد") {
+                // منع تجاوز الحد الأقصى
+                if (localState.accounts.some(acc => acc.id === newAccount.id)) {
+                    alert("هذا الحساب مسجل بالفعل في قائمة تبديل الحسابات!");
+                    return;
+                }
                 localState.accounts.push(newAccount);
                 localState.activeIndex = localState.accounts.length - 1;
             } else {
@@ -1447,7 +1487,7 @@
             buildChatsList();
         }
 
-        // ==================== [6] بناء وتحديث شاشة قائمة المحادثات (البحث والرسائل الأخيرة) ====================
+        // ==================== [6] بناء وتحديث شاشة قائمة المحادثات ====================
         async function buildChatsList(filterQuery = "") {
             const listContainer = document.getElementById('chatsList');
             if (!listContainer) return;
@@ -1458,7 +1498,7 @@
 
             let itemsToDisplay = [];
 
-            // إذا لم يكن الحساب الفعال هو المطور، يتم تلقائياً إضافة المطور عبد الله لقائمة الشات للمراسلة
+            // إذا لم يكن الحساب الفعال هو المطور، يتم تلقائياً إضافة المطور عبد الله لقائمة الشات
             if (!current.isAdmin) {
                 itemsToDisplay.push({
                     name: "Developer Abdullah",
@@ -1482,7 +1522,7 @@
                 }
             });
 
-            // فلترة قائمة البحث بالاسم أو بمعرف الحساب الـ ID بدقة فائقة
+            // فلترة قائمة البحث بالاسم أو بمعرف الحساب الـ ID
             if (filterQuery.trim() !== "") {
                 const q = filterQuery.toLowerCase();
                 itemsToDisplay = itemsToDisplay.filter(item => 
@@ -1535,6 +1575,7 @@
             const player = document.getElementById('profileAudioPlayer');
             player.pause();
             player.currentTime = 0;
+            document.getElementById('modalAudioPlayBtn').innerHTML = `<i class="fa-solid fa-play"></i> تشغيل النغمة`;
 
             localState.activeIndex = (localState.activeIndex === 0) ? 1 : 0;
             saveLocalState();
@@ -1569,6 +1610,7 @@
             const player = document.getElementById('profileAudioPlayer');
             player.pause();
             player.currentTime = 0;
+            document.getElementById('modalAudioPlayBtn').innerHTML = `<i class="fa-solid fa-play"></i> تشغيل النغمة`;
 
             const current = localState.accounts[localState.activeIndex];
             
@@ -1900,9 +1942,30 @@
 
                     const player = document.getElementById('profileAudioPlayer');
                     player.src = e.target.result;
-                    player.play();
+                    document.getElementById('modalAudioPlayBtn').innerHTML = `<i class="fa-solid fa-pause"></i> إيقاف النغمة`;
+                    player.play().catch(e => console.log("بانتظار تفاعل المستخدم لبدء التشغيل"));
                 };
                 reader.readAsDataURL(file);
+            }
+        }
+
+        // تشغيل وإيقاف الصوت يدوياً بالمنبثق لحل مشاكل القيود الأمنية للمتصفحات
+        function toggleModalAudio() {
+            const player = document.getElementById('profileAudioPlayer');
+            const btn = document.getElementById('modalAudioPlayBtn');
+            if (!player.src || player.src === "" || player.src.endsWith('none')) {
+                alert("لم يقم هذا المستخدم برفع ملف صوتي ترحيبي بعد!");
+                return;
+            }
+            if (player.paused) {
+                player.play().then(() => {
+                    btn.innerHTML = `<i class="fa-solid fa-pause"></i> إيقاف النغمة`;
+                }).catch(e => {
+                    alert("عذراً، فشل تشغيل الصوت. يرجى إعادة المحاولة.");
+                });
+            } else {
+                player.pause();
+                btn.innerHTML = `<i class="fa-solid fa-play"></i> تشغيل النغمة`;
             }
         }
 
@@ -1952,9 +2015,14 @@
             document.getElementById('profileModal').style.display = 'flex';
 
             const player = document.getElementById('profileAudioPlayer');
+            const playBtn = document.getElementById('modalAudioPlayBtn');
+            playBtn.innerHTML = `<i class="fa-solid fa-play"></i> تشغيل النغمة`;
+            
             if (current.audio) {
                 player.src = current.audio;
-                player.play().catch(e => console.log("تحتاج لتفاعل المستخدم المباشر لتشغيل الصوت أول مرة."));
+                player.play().then(() => {
+                    playBtn.innerHTML = `<i class="fa-solid fa-pause"></i> إيقاف النغمة`;
+                }).catch(e => console.log("تم حظر التشغيل التلقائي مؤقتاً، يمكن للمستخدم تشغيلها يدوياً."));
             } else {
                 player.src = "";
             }
@@ -1965,6 +2033,7 @@
             const player = document.getElementById('profileAudioPlayer');
             player.pause();
             player.currentTime = 0;
+            document.getElementById('modalAudioPlayBtn').innerHTML = `<i class="fa-solid fa-play"></i> تشغيل النغمة`;
         }
 
         function closeProfileModalOutside(event) {
@@ -2000,14 +2069,24 @@
                 document.getElementById('profileModal').style.display = 'flex';
 
                 const player = document.getElementById('profileAudioPlayer');
+                const playBtn = document.getElementById('modalAudioPlayBtn');
+                playBtn.innerHTML = `<i class="fa-solid fa-play"></i> تشغيل النغمة`;
+
                 if (targetAccount.audio) {
                     player.src = targetAccount.audio;
-                    player.play().catch(e => console.log("تحتاج لتفاعل المستخدم لتشغيل الصوت."));
+                    player.play().then(() => {
+                        playBtn.innerHTML = `<i class="fa-solid fa-pause"></i> إيقاف النغمة`;
+                    }).catch(e => console.log("المتصفح يطلب تفاعل مباشر لتشغيل النغمة."));
                 } else {
                     player.src = "";
                 }
             }
         }
+
+        // إرجاع زر التشغيل لوضعه الافتراضي بمجرد انتهاء الملف الصوتي
+        document.getElementById('profileAudioPlayer').onended = function() {
+            document.getElementById('modalAudioPlayBtn').innerHTML = `<i class="fa-solid fa-play"></i> تشغيل النغمة`;
+        };
 
         // إطلاق هدايا تيك توك ومؤثرات الاحتفال الخاصة بملف المطور
         function triggerTikTokGifts() {
