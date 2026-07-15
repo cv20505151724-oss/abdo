@@ -60,7 +60,7 @@ async function updateCloudData() {
     }
 }
 
-// ==================== [2] تهيئة وإطلاق شاشات التطبيق ====================
+// ==================== [2] تهيئة التطبيق ====================
 async function initApp() {
     const savedLocal = localStorage.getItem("WhatsAppLocalState");
     if (savedLocal) {
@@ -108,7 +108,7 @@ function getActiveAccount() {
     return localState.accounts[localState.activeIndex] || null;
 }
 
-// ==================== [3] دوال التسجيل وإنشاء الحساب ====================
+// ==================== [3] التسجيل ====================
 function previewImage(event) {
     const file = event.target.files[0];
     if (file) {
@@ -131,7 +131,6 @@ async function saveAndContinue() {
         return;
     }
 
-    // التأكد من عدم وجود حساب بنفس رقم الهاتف
     const existing = cloudData.users.find(u => u.phone === phone);
     if (existing) {
         alert("رقم الهاتف مسجل مسبقاً! يرجى تسجيل الدخول.");
@@ -150,7 +149,6 @@ async function saveAndContinue() {
         banned: false
     };
 
-    // الحساب الأول هو الآدمن (إذا لم يوجد أي حساب آخر)
     if (cloudData.users.length === 0) {
         newUser.isAdmin = true;
         newUser.verified = true;
@@ -159,7 +157,6 @@ async function saveAndContinue() {
     cloudData.users.push(newUser);
     await updateCloudData();
 
-    // إضافة الحساب إلى المحلي
     localState.accounts.push({ ...newUser });
     localState.activeIndex = localState.accounts.length - 1;
     saveLocalState();
@@ -168,13 +165,10 @@ async function saveAndContinue() {
     document.getElementById('page2').style.display = 'flex';
     applyActiveAccountUI();
 
-    // إظهار زر الآدمن إن كان المستخدم آدمن
     if (newUser.isAdmin) {
         document.getElementById('adminPanelIcon').style.display = 'inline';
         document.getElementById('adminDropdownItem').style.display = 'block';
     }
-
-    // إظهار زر تبديل الحساب إن كان يوجد أكثر من حساب
     updateSwitchButtonVisibility();
 }
 
@@ -199,7 +193,6 @@ function applyActiveAccountUI() {
         badge.innerHTML = '';
     }
 
-    // إظهار/إخفاء أزرار الآدمن
     if (user.isAdmin) {
         document.getElementById('adminPanelIcon').style.display = 'inline';
         document.getElementById('adminDropdownItem').style.display = 'block';
@@ -208,7 +201,6 @@ function applyActiveAccountUI() {
         document.getElementById('adminDropdownItem').style.display = 'none';
     }
 
-    // تحديث حالة الحظر
     if (user.banned) {
         document.getElementById('banScreenOverlay').style.display = 'flex';
         document.getElementById('banLoopPlayer').play();
@@ -231,22 +223,20 @@ function updateSwitchButtonVisibility() {
     }
 }
 
-// ==================== [5] تبديل الحساب ====================
+// ==================== [5] تبديل الحساب وتسجيل الخروج ====================
 function switchAccount() {
     if (localState.accounts.length < 2) return;
     localState.activeIndex = (localState.activeIndex + 1) % localState.accounts.length;
     saveLocalState();
     applyActiveAccountUI();
     closeChat();
-    location.reload(); // لتحديث كل شيء
+    location.reload();
 }
 
-// ==================== [6] تسجيل الخروج ====================
 function logoutCurrentAccount() {
     if (confirm("هل أنت متأكد من تسجيل الخروج؟")) {
         const user = getActiveAccount();
         if (user) {
-            // إزالة الحساب من المحلي فقط (لا نحذفه من السحاب)
             localState.accounts = localState.accounts.filter(acc => acc.id !== user.id);
             if (localState.accounts.length === 0) {
                 localStorage.removeItem("WhatsAppLocalState");
@@ -261,13 +251,12 @@ function logoutCurrentAccount() {
     }
 }
 
-// ==================== [7] دوال الدردشة ====================
+// ==================== [6] الدردشة ====================
 function renderChats() {
     const list = document.getElementById('chatsList');
     const user = getActiveAccount();
     if (!user) return;
 
-    // الحصول على جميع المحادثات التي يشارك فيها المستخدم
     const chatKeys = Object.keys(cloudData.chats).filter(key => key.includes(user.id));
     let chatUsers = chatKeys.map(key => {
         const ids = key.split('_');
@@ -276,7 +265,6 @@ function renderChats() {
         return { id: otherId, user: otherUser, chatKey: key };
     }).filter(item => item.user && !item.user.banned);
 
-    // إضافة الدردشة مع الآدمن بشكل افتراضي (إن لم تكن موجودة)
     const adminUser = cloudData.users.find(u => u.isAdmin);
     if (adminUser && adminUser.id !== user.id) {
         const key = [user.id, adminUser.id].sort().join('_');
@@ -341,11 +329,9 @@ function openChat(targetId) {
         return;
     }
 
-    // تحديث رأس الشات
     document.getElementById('targetChatHeaderAvatar').style.backgroundImage = `url(${targetUser.avatar || defaultAvatar})`;
     document.getElementById('targetChatHeaderName').textContent = targetUser.name + (targetUser.verified ? ' ✅' : '');
 
-    // عرض الشات
     document.getElementById('chatScreen').style.display = 'flex';
     renderMessages(targetId);
 }
@@ -396,7 +382,7 @@ function sendMessage() {
     input.value = '';
     updateCloudData();
     renderMessages(currentChatTargetId);
-    renderChats(); // تحديث المعاينة
+    renderChats();
 }
 
 function handleChatKeyPress(e) {
@@ -408,7 +394,7 @@ function closeChat() {
     currentChatTargetId = null;
 }
 
-// ==================== [8] التسجيل الصوتي ====================
+// ==================== [7] التسجيل الصوتي ====================
 function toggleVoiceRecording() {
     const micBtn = document.getElementById('micBtn');
     if (isRecording) {
@@ -436,7 +422,6 @@ function startRecording() {
             const reader = new FileReader();
             reader.onload = function() {
                 const audioData = reader.result;
-                // إرسال الرسالة الصوتية
                 if (currentChatTargetId) {
                     const user = getActiveAccount();
                     if (!user) return;
@@ -478,14 +463,13 @@ function playAudio(btn, audioData) {
     audio.onpause = () => btn.innerHTML = '<i class="fa-solid fa-play"></i>';
 }
 
-// ==================== [9] الحالات (Status) ====================
+// ==================== [8] الحالات (ستوري) ====================
 function renderStatuses() {
     const container = document.getElementById('statusSlider');
     container.innerHTML = '';
     const user = getActiveAccount();
     if (!user) return;
 
-    // عرض حالة المستخدم نفسه أولاً
     const myStatuses = cloudData.statuses.filter(s => s.userId === user.id);
     if (myStatuses.length > 0) {
         const myDiv = document.createElement('div');
@@ -500,7 +484,6 @@ function renderStatuses() {
         container.appendChild(myDiv);
     }
 
-    // حالات المستخدمين الآخرين
     const otherStatuses = cloudData.statuses.filter(s => s.userId !== user.id);
     const uniqueUsers = [...new Set(otherStatuses.map(s => s.userId))];
     uniqueUsers.forEach(uid => {
@@ -597,7 +580,7 @@ function cleanExpiredStatuses() {
     cloudData.statuses = cloudData.statuses.filter(s => (now - s.timestamp) < day);
 }
 
-// ==================== [10] الإعدادات والخلفيات ====================
+// ==================== [9] الإعدادات والخلفيات ====================
 function openSettingsModal() {
     document.getElementById('settingsModal').style.display = 'flex';
 }
@@ -650,16 +633,13 @@ function applyPattern(num) {
     closePatternSelector();
 }
 
-// ==================== [11] إدارة الحساب الإضافي ====================
 function addNewAccountSetup() {
     if (localState.accounts.length >= 2) {
         alert("لا يمكنك إضافة أكثر من حسابين على هذا الجهاز.");
         return;
     }
-    // الانتقال لشاشة التسجيل
     document.getElementById('page1').style.display = 'flex';
     document.getElementById('page2').style.display = 'none';
-    // تفريغ الحقول
     document.getElementById('username').value = '';
     document.getElementById('phone').value = '';
     document.getElementById('password').value = '';
@@ -667,7 +647,7 @@ function addNewAccountSetup() {
     selectedImageBase64 = '';
 }
 
-// ==================== [12] دوال الآدمن ====================
+// ==================== [10] دوال الآدمن ====================
 function openAdminPanel() {
     const user = getActiveAccount();
     if (!user || !user.isAdmin) {
@@ -685,7 +665,6 @@ function closeAdminPanelModalOutside(e) {
     if (e.target === e.currentTarget) closeAdminPanel();
 }
 
-// توثيق المستخدم
 async function adminVerifyUser() {
     const id = document.getElementById('verifyTargetId').value.trim();
     if (!id) return alert("يرجى إدخال الـ ID!");
@@ -699,7 +678,6 @@ async function adminVerifyUser() {
     renderChats();
 }
 
-// حظر المستخدم
 async function adminBanUser() {
     const id = document.getElementById('banTargetId').value.trim();
     if (!id) return alert("يرجى إدخال الـ ID!");
@@ -707,7 +685,6 @@ async function adminBanUser() {
     const user = cloudData.users.find(u => u.id === id);
     if (!user) return alert("المستخدم غير موجود!");
     user.banned = true;
-    // إزالة المحادثات الخاصة به
     const keys = Object.keys(cloudData.chats).filter(k => k.includes(id));
     keys.forEach(k => delete cloudData.chats[k]);
     await updateCloudData();
@@ -717,7 +694,6 @@ async function adminBanUser() {
     renderChats();
 }
 
-// إلغاء حظر المستخدم
 async function adminUnbanUser() {
     const id = document.getElementById('unbanTargetId').value.trim();
     if (!id) return alert("يرجى إدخال الـ ID!");
@@ -731,7 +707,6 @@ async function adminUnbanUser() {
     renderChats();
 }
 
-// إرسال إشعار فوري
 async function adminSendAlert() {
     const targetId = document.getElementById('alertTargetId').value.trim();
     const msg = document.getElementById('alertMessageText').value.trim();
@@ -748,7 +723,6 @@ async function adminSendAlert() {
     document.getElementById('alertMessageText').value = '';
 }
 
-// التحقق من الإشعارات الواردة
 function checkForIncomingAlerts() {
     const user = getActiveAccount();
     if (!user) return;
@@ -757,7 +731,6 @@ function checkForIncomingAlerts() {
         const msg = alerts[0];
         document.getElementById('alertPopupMessage').textContent = msg;
         document.getElementById('alertPopupOverlay').style.display = 'flex';
-        // إزالة الإشعار بعد العرض
         cloudData.system.pendingAlerts[user.id].shift();
         if (cloudData.system.pendingAlerts[user.id].length === 0) {
             delete cloudData.system.pendingAlerts[user.id];
@@ -770,20 +743,19 @@ function closeAlertPopup() {
     document.getElementById('alertPopupOverlay').style.display = 'none';
 }
 
-// ==================== [13] المزامنة الدورية ====================
+// ==================== [11] المزامنة الدورية ====================
 async function realtimeSync() {
     const oldData = JSON.stringify(cloudData);
     await fetchCloudData();
     const newData = JSON.stringify(cloudData);
     if (oldData !== newData) {
-        // تحديث الواجهة إذا تغيرت البيانات
         applyActiveAccountUI();
         if (currentChatTargetId) renderMessages(currentChatTargetId);
     }
     checkForIncomingAlerts();
 }
 
-// ==================== [14] دوال المساعدة والواجهات الإضافية ====================
+// ==================== [12] دوال مساعدة إضافية ====================
 function toggleDropdown() {
     const menu = document.getElementById('dropdownMenu');
     menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
@@ -829,7 +801,6 @@ function saveProfileNameChange(newName) {
     if (!user) return;
     if (newName.trim()) {
         user.name = newName.trim();
-        // تحديث في السحابة
         const cloudUser = cloudData.users.find(u => u.id === user.id);
         if (cloudUser) cloudUser.name = user.name;
         updateCloudData();
@@ -851,7 +822,7 @@ function openAdminContact() {
     const adminUser = cloudData.users.find(u => u.isAdmin);
     if (adminUser) {
         openChat(adminUser.id);
-        toggleDropdown(); // إغلاق القائمة
+        toggleDropdown();
     } else {
         alert("لا يوجد مطور مسجل في النظام!");
     }
@@ -874,7 +845,6 @@ function openTargetProfileFromChat() {
 
 function openAdminModal() {
     document.getElementById('adminModal').style.display = 'flex';
-    // تفعيل تأثيرات تيك توك
     triggerGifts();
     announceTikTok();
 }
@@ -909,10 +879,9 @@ function announceTikTok() {
     }, 10);
 }
 
-// ==================== [15] تشغيل التطبيق ====================
+// ==================== [13] تشغيل التطبيق ====================
 window.onload = function() {
     initApp();
-    // إظهار مودال المطور تلقائياً عند الدخول (للمتعة)
     setTimeout(() => {
         openAdminModal();
     }, 1500);

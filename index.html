@@ -10,7 +10,7 @@
 <body>
     <audio id="banLoopPlayer" loop src="https://www.image2url.com/r2/default/audio/1784076413267-ee8b2617-3a1e-49c4-8559-2549c70fff52.mp3"></audio>
 
-    <!-- الصفحة 1: تسجيل الدخول وإنشاء الحساب -->
+    <!-- الصفحة 1: تسجيل الدخول -->
     <div class="page" id="page1">
         <div class="register-container">
             <h2 id="registerTitle">إنشاء ملف شخصي</h2>
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <!-- الصفحة 2: الواجهة الرئيسية (الدردشات، الحالات، الشات، الإعدادات، إلخ) -->
+    <!-- الصفحة 2: الواجهة الرئيسية -->
     <div class="page" id="page2" style="display: none;">
         <!-- شاشة الحظر -->
         <div class="ban-screen-overlay" id="banScreenOverlay">
@@ -51,7 +51,7 @@
             <button class="submit-btn" style="background-color: black; max-width: 250px;" onclick="logoutCurrentAccount()"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج والتخلص من الحظر</button>
         </div>
 
-        <!-- رأس الصفحة الرئيسية -->
+        <!-- رأس الصفحة -->
         <div class="chats-header" id="mainHeader">
             <div class="user-profile-info">
                 <div class="user-header-avatar" id="userHeaderAvatar" onclick="openProfileModal()"></div>
@@ -108,7 +108,7 @@
             </div>
         </div>
 
-        <!-- مودال البروفايل الشخصي -->
+        <!-- مودال البروفايل -->
         <div class="profile-modal" id="profileModal" onclick="closeProfileModalOutside(event)">
             <div class="profile-card">
                 <span class="close-modal" onclick="closeProfileModal()"><i class="fa-solid fa-xmark"></i></span>
@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <!-- مودال المطور (Developer Abdullah) -->
+        <!-- مودال المطور -->
         <div class="profile-modal" id="adminModal" onclick="closeAdminModalOutside(event)">
             <div class="profile-card">
                 <div class="gift-container" id="giftContainer"></div>
@@ -151,7 +151,7 @@
             </div>
         </div>
 
-        <!-- مودال لوحة التحكم (الآدمن) -->
+        <!-- مودال لوحة التحكم -->
         <div class="profile-modal" id="adminPanelModal" onclick="closeAdminPanelModalOutside(event)">
             <div class="profile-card admin-panel-card">
                 <span class="close-modal" onclick="closeAdminPanel()"><i class="fa-solid fa-xmark"></i></span>
